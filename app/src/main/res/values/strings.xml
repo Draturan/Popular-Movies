@@ -1,0 +1,31 @@
+<resources>
+
+    <string name="app_name">Popular Movies</string>
+
+    <!-- Main Activity - Menu -->
+    <string name="menu_sorting">Sorting</string>
+
+    <!-- Main Activity - Retriving Movies data -->
+    <string name="internet_error_message">Low or no internet connection detected</string>
+    <string name="refresh_data">Refresh</string>
+
+    <!-- APINetworkUtils - API URI names -->
+    <string name="API_param_prefixDiscoverUrl">https://api.themoviedb.org/3/discover/movie</string>
+    <string name="API_param_apiKey">api_key</string>
+    <string name="API_param_language">language</string>
+    <string name="API_param_sortBy">sort_by</string>
+    <string name="API_param_includeAdult">include_adult</string>
+    <string name="API_param_include_video">include_video</string>
+    <string name="API_param_page">page</string>
+
+    <!-- JsonUtils - Json names API results -->
+    <string name="discover_results_title">title</string>
+    <string name="discover_results_id">id</string>
+    <string name="discover_results_popularity">popularity</string>
+    <string name="discover_results_posterPath">poster_path</string>
+
+    <!-- Layout - movie_list -->
+    <string name="tv_title_default">NOT DEFINED</string>
+    <string name="iv_poster_description">Poster of the movie</string>
+
+</resources>
