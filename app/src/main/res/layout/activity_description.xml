@@ -18,13 +18,11 @@
             android:id="@+id/iv_poster_big"
             android:layout_width="0dp"
             android:layout_height="200dp"
-            android:background="@drawable/poster"
             android:contentDescription="@string/description_default_description_image_big"
             android:scaleType="centerCrop"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/poster"
             tools:ignore="MissingConstraints" />
 
         <ImageView
@@ -39,7 +37,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/iv_poster_big"
             app:layout_constraintVertical_bias="0.617"
-            app:srcCompat="@drawable/poster"
             tools:ignore="MissingConstraints" />
 
         <TextView

@@ -180,11 +180,15 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.List
                 }
                 movieAdapter.updateData(mMoviesList);
             }else {
-                mInternetMessage.setText(R.string.internet_error_message);
-                mInternetMessage.setVisibility(View.VISIBLE);
+                connectionMissing();
             }
         }
 
+    }
+
+    public void connectionMissing(){
+        mInternetMessage.setText(R.string.internet_error_message);
+        mInternetMessage.setVisibility(View.VISIBLE);
     }
 
 }
