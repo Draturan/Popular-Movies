@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+    <!-- Find out how to put a Spinner inside a menu here:
+    https://stackoverflow.com/questions/37250397/how-to-add-a-spinner-next-to-a-menu-in-the-toolbar
+    and on Android Guide:
+    https://developer.android.com/guide/topics/ui/controls/spinner.html#Populate-->
     <item
         android:id="@+id/action_sorting"
         android:title="@string/menu_sorting"
+        app:actionViewClass="android.widget.Spinner"
         android:icon="@android:drawable/ic_menu_sort_by_size"
         app:showAsAction="ifRoom"/>
-    <item
-        android:id="@+id/action_refresh"
-        android:title="@string/refresh_data"
-        android:icon="@android:drawable/stat_notify_sync_noanim"
-        app:showAsAction="ifRoom" />
 
 </menu>

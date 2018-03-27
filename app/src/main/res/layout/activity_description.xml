@@ -1,9 +1,161 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.example.simone.popularmovies.DescriptionActivity">
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
 
-</android.support.constraint.ConstraintLayout>
+    <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:context="com.example.simone.popularmovies.DescriptionActivity">
+
+
+        <ImageView
+            android:id="@+id/iv_poster_big"
+            android:layout_width="0dp"
+            android:layout_height="200dp"
+            android:background="@drawable/poster"
+            android:contentDescription="@string/description_default_description_image_big"
+            android:scaleType="centerCrop"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/poster"
+            tools:ignore="MissingConstraints" />
+
+        <ImageView
+            android:id="@+id/iv_poster_small"
+            android:layout_width="0dp"
+            android:layout_height="150dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="28dp"
+            android:contentDescription="@string/description_default_description_image_small"
+            app:layout_constraintBottom_toBottomOf="@+id/iv_poster_big"
+            app:layout_constraintDimensionRatio="w,2:3"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/iv_poster_big"
+            app:layout_constraintVertical_bias="0.617"
+            app:srcCompat="@drawable/poster"
+            tools:ignore="MissingConstraints" />
+
+        <TextView
+            android:id="@+id/tv_description_movie_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="12dp"
+            android:maxWidth="180dp"
+            android:text="@string/description_default_text_Title"
+            android:textColor="#1e1f73"
+            android:textSize="20sp"
+            app:layout_constraintStart_toEndOf="@+id/iv_poster_small"
+            app:layout_constraintTop_toBottomOf="@+id/iv_poster_big" />
+
+        <TextView
+            android:id="@+id/tv_description_movie_release_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="@string/description_default_text_Release_date"
+            android:textColor="#3c3c74"
+            android:textSize="18sp"
+            app:layout_constraintStart_toStartOf="@+id/tv_description_movie_title"
+            app:layout_constraintTop_toBottomOf="@+id/tv_description_movie_title" />
+
+        <TextView
+            android:id="@+id/tv_description_averageVote_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="36dp"
+            android:text="@string/description_label_voteAverage"
+            android:textColor="#000000"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/tv_description_movie_title" />
+
+        <TextView
+            android:id="@+id/tv_description_movie_average_vote"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:text="@string/description_default_text_voteAverage"
+            android:textColor="#257b16"
+            android:textSize="30sp"
+            app:layout_constraintEnd_toStartOf="@+id/tv_description_averageVote_label"
+            app:layout_constraintStart_toEndOf="@+id/tv_description_averageVote_label"
+            app:layout_constraintTop_toBottomOf="@+id/tv_description_averageVote_label" />
+
+        <TextView
+            android:id="@+id/tv_description_overview_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:text="@string/description_label_overview"
+            android:textColor="#1e1f73"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toTopOf="@+id/tv_description_movie_overview"
+            app:layout_constraintStart_toStartOf="@+id/tv_description_movie_overview"
+            app:layout_constraintTop_toTopOf="@+id/tv_description_movie_overview"
+            app:layout_constraintVertical_bias="0.421" />
+
+        <TextView
+            android:id="@+id/tv_description_movie_overview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="24dp"
+            android:paddingBottom="50dp"
+            android:paddingLeft="12dp"
+            android:paddingRight="12dp"
+            android:paddingTop="16dp"
+            android:text="@string/description_default_text_Overview"
+            android:textColor="#252525"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_description_movie_release_date" />
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:background="#3c3c74"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <TextView
+                android:id="@+id/TMDB_logo_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="4dp"
+                android:text="@string/description_default_text_TMDB_logo"
+                android:textColor="#dcdcdc"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toTopOf="@+id/TMDB_logo"
+                app:layout_constraintEnd_toStartOf="@+id/TMDB_logo"
+                app:layout_constraintTop_toBottomOf="@+id/TMDB_logo"
+                app:layout_constraintVertical_bias="0.64" />
+
+            <ImageView
+                android:id="@+id/TMDB_logo"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginEnd="8dp"
+                android:background="@drawable/ic_tmdb_logo"
+                android:backgroundTint="#dcdcdc"
+                android:contentDescription="@string/description_default_description_image_TMDB_logo"
+                app:layout_constraintBottom_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="parent" />
+        </android.support.constraint.ConstraintLayout>
+
+
+    </android.support.constraint.ConstraintLayout>
+</ScrollView>

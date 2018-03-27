@@ -62,7 +62,6 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.PosterViewHo
 
     @Override
     public void onBindViewHolder(PosterViewHolder holder, int position) {
-        // TODO eventually remove position or utilize it in another way
         holder.bind(position, mMoviesList);
     }
 

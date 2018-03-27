@@ -10,7 +10,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ProgressBar;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,7 +30,6 @@ import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 public class MainActivity extends AppCompatActivity implements MovieAdapter.ListMoviesClickListener{
 
@@ -41,7 +43,8 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.List
     @BindView(R.id.tv_internet_message)
     TextView mInternetMessage;
 
-    private Toast mToast;
+    private int mSpinnerItemPosition = 0;
+    private String mSelectedSort = "popularity.desc";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,8 +58,7 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.List
         moviesList.setHasFixedSize(true);
 
         // start Async task to get data from TMDB database
-        startAsyncRetrievingMoviesInfo("popularity.desc");
-        String dataFromTMDB = "";
+        startAsyncRetrievingMoviesInfo(mSelectedSort);
 
         // setting Adapter for Recycler View
         movieAdapter = new MovieAdapter(this, mMoviesList, this);
@@ -66,8 +68,44 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.List
 
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
+    public boolean onCreateOptionsMenu(Menu menu){
         getMenuInflater().inflate(R.menu.mainmenu, menu);
+
+        /* --- initialize Spinner for sorting ---
+            Find out how to put a Spinner inside a menu here:
+            https://stackoverflow.com/questions/37250397/how-to-add-a-spinner-next-to-a-menu-in-the-toolbar
+            and on Android Guide:
+            https://developer.android.com/guide/topics/ui/controls/spinner.html
+         */
+        MenuItem item = menu.findItem(R.id.action_sorting);
+        final Spinner spinner = (Spinner) item.getActionView();
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,R.array.sorting_modes, R.layout.spinner_item);
+        adapter.setDropDownViewResource(R.layout.spinner_dropdown_menu);
+        spinner.setAdapter(adapter);
+        // set last Spinner item Position
+        spinner.setSelection(mSpinnerItemPosition,true);
+        // onClickListener of the Spinner
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                switch (spinner.getSelectedItem().toString()) {
+                    case "Popularity":
+                        mSelectedSort = "popularity.desc";
+                        break;
+                    case "Average Vote":
+                        mSelectedSort = "vote_average.desc";
+                        break;
+                }
+                startAsyncRetrievingMoviesInfo(mSelectedSort);
+                mSpinnerItemPosition = position;
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
         return true;
     }
 
@@ -83,10 +121,7 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.List
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int itemSelectedId = item.getItemId();
-        if (itemSelectedId == R.id.action_refresh){
-            startAsyncRetrievingMoviesInfo("popularity.desc");
-            return true;
-        }else if (itemSelectedId == R.id.action_sorting){
+        if (itemSelectedId == R.id.action_sorting){
             Toast.makeText(this, "Sorting Clicked", Toast.LENGTH_SHORT).show();
         }
         return super.onOptionsItemSelected(item);
@@ -95,7 +130,15 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.List
     @Override
     public void onListMoviesClick(Movie movieClicked) {
         Intent startDescriptionActivityIntent = new Intent(this, DescriptionActivity.class);
-        startDescriptionActivityIntent.putExtra();
+        JsonUtils jsonUtils = new JsonUtils();
+        String movieClickedData = "";
+        try{
+            movieClickedData = jsonUtils.getJsonFromMovie(movieClicked);
+        }catch (JSONException e){
+            e.printStackTrace();
+        }
+
+        startDescriptionActivityIntent.putExtra(Intent.EXTRA_TEXT, movieClickedData);
         startActivity(startDescriptionActivityIntent);
     }
 

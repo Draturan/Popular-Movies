@@ -3,26 +3,34 @@
     <string name="app_name">Popular Movies</string>
 
     <!-- Main Activity - Menu -->
-    <string name="menu_sorting">Sorting</string>
+    <string name="menu_sorting">Spinner Sorting</string>
+    <string-array name="sorting_modes">
+        <item>Popularity</item>
+        <item>Average Vote</item>
+    </string-array>
 
     <!-- Main Activity - Retriving Movies data -->
-    <string name="internet_error_message">Low or no internet connection detected</string>
-    <string name="refresh_data">Refresh</string>
+    <string name="internet_error_message">Problems to retrieve information from Database</string>
 
-    <!-- APINetworkUtils - API URI names -->
-    <string name="API_param_prefixDiscoverUrl">https://api.themoviedb.org/3/discover/movie</string>
-    <string name="API_param_apiKey">api_key</string>
-    <string name="API_param_language">language</string>
-    <string name="API_param_sortBy">sort_by</string>
-    <string name="API_param_includeAdult">include_adult</string>
-    <string name="API_param_include_video">include_video</string>
-    <string name="API_param_page">page</string>
-
-    <!-- JsonUtils - Json names API results -->
-    <string name="discover_results_title">title</string>
-    <string name="discover_results_id">id</string>
-    <string name="discover_results_popularity">popularity</string>
-    <string name="discover_results_posterPath">poster_path</string>
+    <!-- Description Activity - Data -->
+    <string name="description_default_description_image_big">image of movie image as presentation</string>
+    <string name="description_default_description_image_small">poster of movie</string>
+    <string name="description_default_text_Title">Title Test</string>
+    <string name="description_default_text_Release_date">2018-02-12</string>
+    <string name="description_label_overview">Synopsis</string>
+    <string name="description_default_text_Overview">Cose a caso. Believing they have left behind 
+        shadowy figures from their past, newlyweds Christian and Ana fully embrace an inextricable 
+        connection and shared life of luxury. But just as she steps into her role as Mrs. Grey and 
+        he relaxes into an unfamiliar stability, new threats could jeopardize their happy ending 
+        before it even begins. A lot of people think that none is able to think to the future.
+        Three monkey are on the top of the tree, two in the middle, and one on the bottom. The one
+        under the tree is the one that rules the others. I remember when it happen, the sky crushed
+        on the head of the saviors, too much busy to sleep and eat. Remember the day I set you free.
+        I told you can olways count on me darling.</string>
+    <string name="description_label_voteAverage">Vote</string>
+    <string name="description_default_text_voteAverage">7.8</string>
+    <string name="description_default_text_TMDB_logo">this information are retrieved from</string>
+    <string name="description_default_description_image_TMDB_logo">Logo of TMDB</string>
 
     <!-- Layout - movie_list -->
     <string name="tv_title_default">NOT DEFINED</string>
