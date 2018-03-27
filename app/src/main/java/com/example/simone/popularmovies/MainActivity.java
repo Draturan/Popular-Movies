@@ -2,6 +2,7 @@ package com.example.simone.popularmovies;
 
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
@@ -40,7 +41,7 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.List
     @BindView(R.id.tv_internet_message) TextView mInternetMessage;
 
     private int mSpinnerItemPosition = 0;
-    private String mSelectedSort = "popularity.desc";
+    private String mSelectedSort = "popular";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,7 +55,7 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.List
         moviesList.setHasFixedSize(true);
 
         // start Async task to get data from TMDB database
-        startAsyncRetrievingMoviesInfo(mSelectedSort);
+        startAsyncRetrievingMoviesInfo(mSelectedSort, null);
 
         // setting Adapter for Recycler View
         movieAdapter = new MovieAdapter(this, mMoviesList, this);
@@ -86,13 +87,13 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.List
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 switch (spinner.getSelectedItem().toString()) {
                     case "Popularity":
-                        mSelectedSort = "popularity.desc";
+                        mSelectedSort = "popular";
                         break;
                     case "Average Vote":
-                        mSelectedSort = "vote_average.desc";
+                        mSelectedSort = "top rated";
                         break;
                 }
-                startAsyncRetrievingMoviesInfo(mSelectedSort);
+                startAsyncRetrievingMoviesInfo(mSelectedSort,null);
                 mSpinnerItemPosition = position;
             }
 
@@ -112,8 +113,8 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.List
      *               https://developers.themoviedb.org/3/discover/movie-discover
      */
     @SuppressWarnings("JavaDoc")
-    private void startAsyncRetrievingMoviesInfo(String sortBy){
-        URL buildUrl = ApiNetworkUtils.buildUrl(sortBy);
+    private void startAsyncRetrievingMoviesInfo(String lookingFor, @Nullable String sortBy){
+        URL buildUrl = ApiNetworkUtils.buildUrl(lookingFor,null);
         new RetrieveMoviesInformation().execute(buildUrl);
     }
 

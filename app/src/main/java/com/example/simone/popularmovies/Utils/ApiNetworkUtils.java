@@ -1,6 +1,7 @@
 package com.example.simone.popularmovies.Utils;
 
 import android.net.Uri;
+import android.support.annotation.Nullable;
 import android.util.Log;
 
 import java.io.IOException;
@@ -20,6 +21,8 @@ public class ApiNetworkUtils {
     private static final String TAG = ApiNetworkUtils.class.getSimpleName();
 
     private static final String PREFIX_DISCOVER_URL = "https://api.themoviedb.org/3/discover/movie";
+    private static final String PREFIX_POPULAR_URL = "https://api.themoviedb.org/3/movie/popular";
+    private static final String PREFIX_TOP_RATED_URL = "https://api.themoviedb.org/3/movie/top_rated";
 
     // setting params names
     private static final String PARAM_APIKEY = "api_key";
@@ -44,18 +47,43 @@ public class ApiNetworkUtils {
     /**
      * Builder of the URL needed to ask TMDB server for movies informations
      *
-     * @param sort_by for what parameter we have to sort it by
+     * @param type Could be discover, popular or top rated and retrieve the information to the
+     *             server using a different API call. Discover needs the sortby parameter to work.
+     * @param sort_by @Nullable for what parameter we have to sort it by
      * @return Url needed to make the call or, in case of Exception, returns null
      */
-    public static URL buildUrl (String sort_by){
-        Uri uriBuilder = Uri.parse(PREFIX_DISCOVER_URL).buildUpon()
-                .appendQueryParameter(PARAM_APIKEY, API_KEY)
-                .appendQueryParameter(PARAM_LANGUAGE, language)
-                .appendQueryParameter(PARAM_SORTBY, sort_by)
-                .appendQueryParameter(PARAM_ADULT, include_adult)
-                .appendQueryParameter(PARAM_VIDEO, include_video)
-                .appendQueryParameter(PARAM_PAGE, Integer.toString(page))
-                .build();
+    public static URL buildUrl (String type, @Nullable String sort_by){
+        Uri uriBuilder = Uri.EMPTY;
+        switch (type){
+            case "discover":
+                if(sort_by == null){
+                    sort_by = "popularity.desc";
+                }
+                uriBuilder = Uri.parse(PREFIX_DISCOVER_URL).buildUpon()
+                        .appendQueryParameter(PARAM_APIKEY, API_KEY)
+                        .appendQueryParameter(PARAM_LANGUAGE, language)
+                        .appendQueryParameter(PARAM_SORTBY, sort_by)
+                        .appendQueryParameter(PARAM_ADULT, include_adult)
+                        .appendQueryParameter(PARAM_VIDEO, include_video)
+                        .appendQueryParameter(PARAM_PAGE, Integer.toString(page))
+                        .build();
+                break;
+            case "popular":
+                uriBuilder = Uri.parse(PREFIX_POPULAR_URL).buildUpon()
+                        .appendQueryParameter(PARAM_APIKEY, API_KEY)
+                        .appendQueryParameter(PARAM_LANGUAGE, language)
+                        .appendQueryParameter(PARAM_PAGE, Integer.toString(page))
+                        .build();
+                break;
+            case "top rated":
+                uriBuilder = Uri.parse(PREFIX_TOP_RATED_URL).buildUpon()
+                        .appendQueryParameter(PARAM_APIKEY, API_KEY)
+                        .appendQueryParameter(PARAM_LANGUAGE, language)
+                        .appendQueryParameter(PARAM_PAGE, Integer.toString(page))
+                        .build();
+                break;
+        }
+
 
         try{
             URL urlFromUri = new URL(uriBuilder.toString());
