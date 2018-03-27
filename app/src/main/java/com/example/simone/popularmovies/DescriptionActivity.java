@@ -15,6 +15,7 @@ import com.squareup.picasso.Picasso;
 import org.json.JSONException;
 
 import java.text.SimpleDateFormat;
+import java.util.Locale;
 
 import butterknife.BindDrawable;
 import butterknife.BindView;
@@ -60,7 +61,7 @@ public class DescriptionActivity extends AppCompatActivity {
                     .placeholder(dNoImage)
                     .error(dNoImageAvailable)
                     .into(mImageViewPosterSmall);
-            mTextViewMovieDate.setText(new SimpleDateFormat("yyyy-MM-dd").format(movie.getReleaseDate()));
+            mTextViewMovieDate.setText(new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(movie.getReleaseDate()));
             mTextViewMovieVote.setText(String.valueOf(movie.getVoteAverage()));
             mTextViewOverview.setText(movie.getOverview());
         }

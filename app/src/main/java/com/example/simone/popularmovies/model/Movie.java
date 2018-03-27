@@ -1,12 +1,12 @@
 package com.example.simone.popularmovies.model;
 
-import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 /**
- * Created by Simone on 13/03/2018.
+ * Created by Simone on 13/03/2018 for Popular-Movies project
  */
 
 public class Movie {
@@ -23,18 +23,6 @@ public class Movie {
     // function for creation without parameters
     public Movie(){
 
-    }
-
-    public Movie (String title, int id, float popularity, String poster_path, float vote_average,
-                  String original_language, String overview, Date release_date){
-        this.title = title;
-        this.id = id;
-        this.popularity = popularity;
-        this.poster_path = poster_path;
-        this.vote_average = vote_average;
-        this.original_language = original_language;
-        this.overview = overview;
-        this.release_date = release_date;
     }
 
     public String getTitle(){
@@ -65,15 +53,16 @@ public class Movie {
     public Date getReleaseDate(){ return this.release_date;}
 
     /**
-     * Setting the realease date from String to Date type parameter
+     * Setting the release date from String to Date type parameter
      * Reference: I've found the solution looking at this discussion in Stack Overflow:
      * https://stackoverflow.com/questions/8573250/android-how-can-i-convert-string-to-date
      * Using SimpleDateFormat class.
-     * Format recived from Api -> 2018-02-07
-     * @param releaseDate
+     * Format received from Api -> 2018-02-07
+     *
+     * @param releaseDate Date of the Movie Release
      */
     public void setReleaseDate(String releaseDate){
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
         try{
             this.release_date = simpleDateFormat.parse(releaseDate);
         }catch (ParseException e){

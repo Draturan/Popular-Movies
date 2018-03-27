@@ -1,7 +1,5 @@
 package com.example.simone.popularmovies.Utils;
 
-import android.util.Log;
-
 import com.example.simone.popularmovies.model.Movie;
 
 import org.json.JSONArray;
@@ -10,21 +8,22 @@ import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Locale;
 
 /**
- * Created by Simone on 13/03/2018.
+ * Created by Simone on 13/03/2018 for Popular-Movies project
  */
 
 public class JsonUtils {
 
-    private String p_id = "id";
-    private String p_title= "title";
-    private String p_popularity= "popularity";
-    private String p_posterPath= "poster_path";
-    private String p_vote_average = "vote_average";
-    private String p_original_language = "original_language";
-    private String p_overview = "overview";
-    private String p_release_date = "release_date";
+    private final String p_id = "id";
+    private final String p_title= "title";
+    private final String p_popularity= "popularity";
+    private final String p_posterPath= "poster_path";
+    private final String p_vote_average = "vote_average";
+    private final String p_original_language = "original_language";
+    private final String p_overview = "overview";
+    private final String p_release_date = "release_date";
 
     public ArrayList<Movie> parseDiscoverAnswerJson(String jsonDiscover) throws JSONException{
         JSONArray jsonArray = new JSONArray(jsonDiscover);
@@ -75,7 +74,7 @@ public class JsonUtils {
         jsonObject.putOpt(p_vote_average, movie.getVoteAverage());
         jsonObject.putOpt(p_overview, movie.getOverview());
         // parsing date as String
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
         jsonObject.putOpt(p_release_date, simpleDateFormat.format(movie.getReleaseDate()));
 
         return jsonObject.toString();

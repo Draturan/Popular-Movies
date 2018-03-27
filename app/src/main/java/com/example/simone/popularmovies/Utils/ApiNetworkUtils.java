@@ -12,7 +12,7 @@ import java.util.Scanner;
 import javax.net.ssl.HttpsURLConnection;
 
 /**
- * Created by Simone on 09/03/2018.
+ * Created by Simone on 09/03/2018 for Popular-Movies project
  */
 
 public class ApiNetworkUtils {
@@ -89,10 +89,9 @@ public class ApiNetworkUtils {
 
     public static Uri getImageUrl(String path){
 
-        Uri uriBuilder = Uri.parse(IMAGE_DOMAIN).buildUpon()
+        return Uri.parse(IMAGE_DOMAIN).buildUpon()
                 .appendEncodedPath(path)
                 .build();
-        return uriBuilder;
     }
 
 }

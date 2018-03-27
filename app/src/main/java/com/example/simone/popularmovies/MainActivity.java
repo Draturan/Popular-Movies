@@ -1,6 +1,5 @@
 package com.example.simone.popularmovies;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
@@ -35,13 +34,10 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.List
 
     private ArrayList<Movie> mMoviesList = new ArrayList<>();
     private MovieAdapter movieAdapter;
-    @BindView(R.id.rv_movies)
-    RecyclerView moviesList;
+    @BindView(R.id.rv_movies) RecyclerView moviesList;
 
-    @BindView(R.id.pb_api_request_indicator)
-    ProgressBar mProgressBar;
-    @BindView(R.id.tv_internet_message)
-    TextView mInternetMessage;
+    @BindView(R.id.pb_api_request_indicator) ProgressBar mProgressBar;
+    @BindView(R.id.tv_internet_message) TextView mInternetMessage;
 
     private int mSpinnerItemPosition = 0;
     private String mSelectedSort = "popularity.desc";
@@ -111,9 +107,12 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.List
 
     /**
      * Function that starts the Async task to retrieve data from TMDB
-     * @param sortBy
+     * @param sortBy choose the parameter which the Movie should be sorted by, limited possibility
+     *               in accordance with API documentation:
+     *               https://developers.themoviedb.org/3/discover/movie-discover
      */
-    public void startAsyncRetrievingMoviesInfo(String sortBy){
+    @SuppressWarnings("JavaDoc")
+    private void startAsyncRetrievingMoviesInfo(String sortBy){
         URL buildUrl = ApiNetworkUtils.buildUrl(sortBy);
         new RetrieveMoviesInformation().execute(buildUrl);
     }

@@ -22,12 +22,10 @@ import butterknife.ButterKnife;
 
 
 /**
- * Created by Simone on 13/03/2018.
+ * Created by Simone on 13/03/2018 for Popular-Movies project
  */
 
 public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.PosterViewHolder> {
-
-    private static final String TAG = MovieAdapter.class.getSimpleName();
 
     private final Context mContext;
     private ArrayList<Movie> mMoviesList;
@@ -41,8 +39,9 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.PosterViewHo
     /**
      * Constructor of the class
      *
-     * @param context
-     * @param moviesArray
+     * @param context @NonNull Context of the Activity
+     * @param moviesArray @NonNull Array of Movies object with all the movie information
+     * @param listener listener for the click on the movie poster in the grid
      */
     public MovieAdapter (@NonNull Context context, @NonNull ArrayList<Movie> moviesArray, ListMoviesClickListener listener){
         mContext = context;
@@ -55,9 +54,8 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.PosterViewHo
         LayoutInflater inflater = LayoutInflater.from(mContext);
 
         View view = inflater.inflate(R.layout.movie_list, parent, false);
-        PosterViewHolder viewHolder = new PosterViewHolder(view);
 
-        return viewHolder;
+        return new PosterViewHolder(view);
     }
 
     @Override
@@ -112,7 +110,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.PosterViewHo
     /**
      * Function to update the data of the Movies list
      *
-     * @param movieArrayList
+     * @param movieArrayList List of Movie object needs to update the older one
      */
     public void updateData (ArrayList<Movie> movieArrayList){
         mMoviesList = movieArrayList;
