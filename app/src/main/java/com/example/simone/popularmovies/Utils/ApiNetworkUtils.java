@@ -4,6 +4,8 @@ import android.net.Uri;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
+import com.example.simone.popularmovies.BuildConfig;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
@@ -33,7 +35,7 @@ public class ApiNetworkUtils {
     private static final String PARAM_PAGE = "page";
 
     // private Api key for TMDB
-    private static final String API_KEY = "YOUR_API_KEY";
+    private static final String API_KEY = BuildConfig.APY_KEY_TMDB;
 
     // variables that for now we use as static
     private static final String language = "en-US";

@@ -1,6 +1,9 @@
 package com.example.simone.popularmovies;
 
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -19,6 +22,8 @@ import android.widget.Toast;
 
 import com.example.simone.popularmovies.Utils.ApiNetworkUtils;
 import com.example.simone.popularmovies.Utils.JsonUtils;
+import com.example.simone.popularmovies.async.AsyncTaskCompleteListener;
+import com.example.simone.popularmovies.async.RetrieveMoviesInformationsTask;
 import com.example.simone.popularmovies.model.Movie;
 
 import org.json.JSONException;
@@ -31,7 +36,8 @@ import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class MainActivity extends AppCompatActivity implements MovieAdapter.ListMoviesClickListener{
+public class MainActivity extends AppCompatActivity
+        implements MovieAdapter.ListMoviesClickListener{
 
     private ArrayList<Movie> mMoviesList = new ArrayList<>();
     private MovieAdapter movieAdapter;
@@ -62,7 +68,6 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.List
         moviesList.setAdapter(movieAdapter);
 
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu){
@@ -108,14 +113,23 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.List
 
     /**
      * Function that starts the Async task to retrieve data from TMDB
+     *
      * @param sortBy choose the parameter which the Movie should be sorted by, limited possibility
      *               in accordance with API documentation:
      *               https://developers.themoviedb.org/3/discover/movie-discover
      */
     @SuppressWarnings("JavaDoc")
     private void startAsyncRetrievingMoviesInfo(String lookingFor, @Nullable String sortBy){
-        URL buildUrl = ApiNetworkUtils.buildUrl(lookingFor,null);
-        new RetrieveMoviesInformation().execute(buildUrl);
+        // checking internet connection
+        ConnectivityManager connectivityManager = (ConnectivityManager) getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetwork = connectivityManager.getActiveNetworkInfo();
+        if (activeNetwork != null && activeNetwork.isConnectedOrConnecting()){
+            URL buildUrl = ApiNetworkUtils.buildUrl(lookingFor,null);
+            new RetrieveMoviesInformationsTask(this,new FetchMovieTaskCompleteListener()).execute(buildUrl);
+        }else{
+            connectionMissing();
+        }
+
     }
 
     @Override
@@ -142,39 +156,23 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.List
         startActivity(startDescriptionActivityIntent);
     }
 
-    public class RetrieveMoviesInformation extends AsyncTask<URL, Void, String> {
+    /**
+     * Listener made to remove the Async Task from MainActivity
+     */
+    public class FetchMovieTaskCompleteListener implements AsyncTaskCompleteListener<String> {
 
         @Override
-        protected void onPreExecute() {
+        public void onPreTaskExecute() {
             mProgressBar.setVisibility(View.VISIBLE);
             mInternetMessage.setVisibility(View.INVISIBLE);
-            super.onPreExecute();
         }
 
         @Override
-        protected String doInBackground(URL... urls) {
-            URL requestUrl= urls[0];
-            String result = null;
-            try{
-                String answer = ApiNetworkUtils.getResponseFromHttpUrl(requestUrl);
-                try{
-                    JSONObject jsonObject = new JSONObject(answer);
-                    result = jsonObject.getString("results");
-                }catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            } catch (IOException e){
-                e.printStackTrace();
-            }
-            return result;
-        }
-
-        @Override
-        protected void onPostExecute(String s) {
+        public void onTaskComplete(String result) {
             mProgressBar.setVisibility(View.INVISIBLE);
-            if (s != null && !s.isEmpty()){
+            if (result != null && !result.isEmpty()){
                 try {
-                    mMoviesList = new JsonUtils().parseDiscoverAnswerJson(s);
+                    mMoviesList = new JsonUtils().parseDiscoverAnswerJson(result);
                 }catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -183,7 +181,6 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.List
                 connectionMissing();
             }
         }
-
     }
 
     public void connectionMissing(){
