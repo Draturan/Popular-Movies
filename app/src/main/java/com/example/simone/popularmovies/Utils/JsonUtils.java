@@ -25,7 +25,7 @@ public class JsonUtils {
     private final String p_overview = "overview";
     private final String p_release_date = "release_date";
 
-    public ArrayList<Movie> parseDiscoverAnswerJson(String jsonDiscover) throws JSONException{
+    public ArrayList<Movie> parseAnswerJson(String jsonDiscover) throws JSONException{
         JSONArray jsonArray = new JSONArray(jsonDiscover);
         ArrayList<Movie> movieArrayList = new ArrayList<>();
         // parsing data retrieved and putting in the ArrayList as a List of Movie objects

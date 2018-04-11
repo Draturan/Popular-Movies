@@ -1,14 +1,8 @@
 package com.example.simone.popularmovies.async;
 
-import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.Context;
 import android.os.AsyncTask;
-import android.view.View;
-import android.widget.ProgressBar;
-import android.widget.TextView;
 
-import com.example.simone.popularmovies.R;
 import com.example.simone.popularmovies.Utils.ApiNetworkUtils;
 
 import org.json.JSONException;
@@ -17,8 +11,6 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.net.URL;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
 
 /**
  * Created by Simone on 28/03/2018 for Popular-Movies project

@@ -8,14 +8,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.simone.popularmovies.Utils.ApiNetworkUtils;
-import com.example.simone.popularmovies.Utils.JsonUtils;
 import com.example.simone.popularmovies.model.Movie;
 import com.squareup.picasso.Picasso;
 
-import org.json.JSONException;
-
-import java.text.SimpleDateFormat;
-import java.util.Locale;
 
 import butterknife.BindDrawable;
 import butterknife.BindView;
@@ -39,16 +34,9 @@ public class DescriptionActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         // starting Intent receiver
         Intent intentThatStartThis = getIntent();
-        if (intentThatStartThis.hasExtra(Intent.EXTRA_TEXT)){
+        if (intentThatStartThis.hasExtra("MovieObj")){
             // grabbing data from intent
-            String eMovieJson = intentThatStartThis.getStringExtra(Intent.EXTRA_TEXT);
-            Movie movie = new Movie();
-            // Rebuilding the Movie object from String coming from intent
-            try{
-                movie = new JsonUtils().parseMovieJson(eMovieJson);
-            }catch (JSONException e){
-                e.printStackTrace();
-            }
+            Movie movie = intentThatStartThis.getParcelableExtra("MovieObj");
             // implementing data in the correct Views
             mTextViewMovieTitle.setText(movie.getTitle());
             Picasso.with(this)
@@ -61,7 +49,7 @@ public class DescriptionActivity extends AppCompatActivity {
                     .placeholder(dNoImage)
                     .error(dNoImageAvailable)
                     .into(mImageViewPosterSmall);
-            mTextViewMovieDate.setText(new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(movie.getReleaseDate()));
+            mTextViewMovieDate.setText(movie.getReleaseDate());
             mTextViewMovieVote.setText(String.valueOf(movie.getVoteAverage()));
             mTextViewOverview.setText(movie.getOverview());
         }

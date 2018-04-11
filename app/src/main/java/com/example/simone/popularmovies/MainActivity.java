@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.os.AsyncTask;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -27,9 +26,7 @@ import com.example.simone.popularmovies.async.RetrieveMoviesInformationsTask;
 import com.example.simone.popularmovies.model.Movie;
 
 import org.json.JSONException;
-import org.json.JSONObject;
 
-import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 
@@ -78,7 +75,7 @@ public class MainActivity extends AppCompatActivity
             https://stackoverflow.com/questions/37250397/how-to-add-a-spinner-next-to-a-menu-in-the-toolbar
             and on Android Guide:
             https://developer.android.com/guide/topics/ui/controls/spinner.html
-         */
+        */
         MenuItem item = menu.findItem(R.id.action_sorting);
         final Spinner spinner = (Spinner) item.getActionView();
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,R.array.sorting_modes, R.layout.spinner_item);
@@ -124,7 +121,7 @@ public class MainActivity extends AppCompatActivity
         ConnectivityManager connectivityManager = (ConnectivityManager) getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo activeNetwork = connectivityManager.getActiveNetworkInfo();
         if (activeNetwork != null && activeNetwork.isConnectedOrConnecting()){
-            URL buildUrl = ApiNetworkUtils.buildUrl(lookingFor,null);
+            URL buildUrl = ApiNetworkUtils.buildUrl(lookingFor,sortBy);
             new RetrieveMoviesInformationsTask(this,new FetchMovieTaskCompleteListener()).execute(buildUrl);
         }else{
             connectionMissing();
@@ -144,15 +141,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onListMoviesClick(Movie movieClicked) {
         Intent startDescriptionActivityIntent = new Intent(this, DescriptionActivity.class);
-        JsonUtils jsonUtils = new JsonUtils();
-        String movieClickedData = "";
-        try{
-            movieClickedData = jsonUtils.getJsonFromMovie(movieClicked);
-        }catch (JSONException e){
-            e.printStackTrace();
-        }
-
-        startDescriptionActivityIntent.putExtra(Intent.EXTRA_TEXT, movieClickedData);
+        startDescriptionActivityIntent.putExtra("MovieObj", movieClicked);
         startActivity(startDescriptionActivityIntent);
     }
 
@@ -172,7 +161,7 @@ public class MainActivity extends AppCompatActivity
             mProgressBar.setVisibility(View.INVISIBLE);
             if (result != null && !result.isEmpty()){
                 try {
-                    mMoviesList = new JsonUtils().parseDiscoverAnswerJson(result);
+                    mMoviesList = new JsonUtils().parseAnswerJson(result);
                 }catch (JSONException e) {
                     e.printStackTrace();
                 }

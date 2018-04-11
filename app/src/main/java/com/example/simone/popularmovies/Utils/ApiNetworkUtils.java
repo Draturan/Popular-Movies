@@ -57,7 +57,7 @@ public class ApiNetworkUtils {
     public static URL buildUrl (String type, @Nullable String sort_by){
         Uri uriBuilder = Uri.EMPTY;
         switch (type){
-            case "discover":
+            case "discover": // Case not implemented because not required in the project
                 if(sort_by == null){
                     sort_by = "popularity.desc";
                 }
