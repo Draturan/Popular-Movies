@@ -74,9 +74,6 @@ public class FavoritesFragment extends Fragment
         moviesList.setLayoutManager(gridLayoutManager);
         moviesList.setHasFixedSize(true);
 
-        // start Async task to get data from TMDB database
-        //startAsyncRetrievingMoviesInfo(mSelectedSort, null);
-
         // setting Adapter for Recycler View
         movieAdapter = new MovieAdapter(getActivity(), mMoviesList, this);
         moviesList.setAdapter(movieAdapter);

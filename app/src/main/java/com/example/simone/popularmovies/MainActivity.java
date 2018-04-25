@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity{
         ButterKnife.bind(this);
 
         /*
-            Bottom Navitaor View
+            Bottom Navigator View
             The guide to implement the Bottom Navitagor View, with usage of Fragments, was given by
             my reviewer as a suggestion to improve the usability of the app, followed at this link:
             http://www.truiton.com/2017/01/android-bottom-navigation-bar-example/

@@ -25,6 +25,10 @@ public class ApiNetworkUtils {
     private static final String PREFIX_DISCOVER_URL = "https://api.themoviedb.org/3/discover/movie";
     private static final String PREFIX_POPULAR_URL = "https://api.themoviedb.org/3/movie/popular";
     private static final String PREFIX_TOP_RATED_URL = "https://api.themoviedb.org/3/movie/top_rated";
+    private static final String PREFIX_TRAILER_URL = "https://api.themoviedb.org/3/movie/";
+    private static final String URL_TRAILER_PATH = "video";
+    private static final String PREFIX_REVIEWS_URL = "https://api.themoviedb.org/3/movie/";
+    private static final String URL_REVIEWS_PATH = "reviews";
 
     // setting params names
     private static final String PARAM_APIKEY = "api_key";
@@ -92,6 +96,60 @@ public class ApiNetworkUtils {
             Log.v(TAG,"URL generated: " + urlFromUri);
             return urlFromUri;
         } catch (MalformedURLException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public static URL buildTrailerUrl (int movieId, @Nullable String language){
+        Uri uriBuilder = Uri.parse(PREFIX_TRAILER_URL).buildUpon()
+                .appendPath(Integer.toString(movieId))
+                .appendPath(URL_TRAILER_PATH)
+                .appendQueryParameter(PARAM_APIKEY, API_KEY)
+                .build();
+        // checking if there is any preference on language
+        if (language != null){
+            uriBuilder.buildUpon()
+                    .appendQueryParameter(PARAM_LANGUAGE, language)
+                    .build();
+        }else{
+            uriBuilder.buildUpon()
+                    .appendQueryParameter(PARAM_LANGUAGE, ApiNetworkUtils.language)
+                    .build();
+        }
+
+        try{
+            URL urlFromUri = new URL(uriBuilder.toString());
+            Log.v(TAG,"Trailer URL generated: " + urlFromUri);
+            return urlFromUri;
+        }catch (MalformedURLException e){
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public static URL buildReviewsUrl (int movieId, @Nullable String language){
+        Uri uriBuilder = Uri.parse(PREFIX_REVIEWS_URL).buildUpon()
+                .appendPath(Integer.toString(movieId))
+                .appendPath(URL_REVIEWS_PATH)
+                .appendQueryParameter(PARAM_APIKEY, API_KEY)
+                .build();
+        // checking if there is any preference on language
+        if (language != null){
+            uriBuilder.buildUpon()
+                    .appendQueryParameter(PARAM_LANGUAGE, language)
+                    .build();
+        }else{
+            uriBuilder.buildUpon()
+                    .appendQueryParameter(PARAM_LANGUAGE, ApiNetworkUtils.language)
+                    .build();
+        }
+
+        try{
+            URL urlFromUri = new URL(uriBuilder.toString());
+            Log.v(TAG,"Reviews URL generated: " + urlFromUri);
+            return urlFromUri;
+        }catch (MalformedURLException e){
             e.printStackTrace();
             return null;
         }
