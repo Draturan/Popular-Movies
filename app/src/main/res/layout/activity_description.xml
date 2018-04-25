@@ -97,31 +97,28 @@
             android:textSize="20sp"
             app:layout_constraintBottom_toTopOf="@+id/tv_description_movie_overview"
             app:layout_constraintStart_toStartOf="@+id/tv_description_movie_overview"
-            app:layout_constraintTop_toTopOf="@+id/tv_description_movie_overview"
-            app:layout_constraintVertical_bias="0.421" />
+            app:layout_constraintTop_toTopOf="@+id/tv_description_movie_overview" />
 
         <TextView
             android:id="@+id/tv_description_movie_overview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="30dp"
             android:paddingBottom="50dp"
             android:paddingLeft="12dp"
             android:paddingRight="12dp"
-            android:paddingTop="16dp"
+            android:paddingTop="20dp"
             android:text="@string/description_default_text_Overview"
             android:textColor="#252525"
             android:textSize="14sp"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_description_movie_release_date" />
+            app:layout_constraintTop_toBottomOf="@+id/iv_poster_small" />
 
         <android.support.constraint.ConstraintLayout
             android:layout_width="0dp"
-            android:layout_height="40dp"
+            android:layout_height="30dp"
             android:background="#3c3c74"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

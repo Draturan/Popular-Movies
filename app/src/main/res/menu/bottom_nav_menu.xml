@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:id="@+id/action_popular"
+        android:icon="@drawable/ic_remove_red_eye_black_18px"
+        android:title="@string/nav_bot_popularity" />
+
+    <item android:id="@+id/action_most_rated"
+        android:icon="@drawable/ic_star_rate_black_18px"
+        android:title="@string/nav_bot_average_vote" />
+
+    <item android:id="@+id/action_favorites"
+        android:icon="@drawable/ic_favorite_black_18px"
+        android:title="@string/nav_bot_favorites" />
+
+</menu>

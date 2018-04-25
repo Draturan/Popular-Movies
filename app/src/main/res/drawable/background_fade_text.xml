@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--    ### Fade Background for a TextView ###
+        I found this solution on Stackoverflow.com at this link:
+        https://stackoverflow.com/questions/14364617/how-can-i-add-gradient-effect-to-background-color-of-textview-in-a-listview -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <gradient
+        android:startColor="@color/backgroundTextView_grad_start"
+        android:endColor="@color/backgroundTextView_grad_finish"
+        android:angle="-270" />
+</shape>
