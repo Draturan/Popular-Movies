@@ -3,6 +3,8 @@ package com.example.simone.popularmovies.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.ArrayList;
+
 
 /**
  * Created by Simone on 13/03/2018 for Popular-Movies project

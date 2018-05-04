@@ -59,7 +59,6 @@ public class MostRatedFragment extends Fragment
      *
      * @return A new instance of fragment MostRatedFragment.
      */
-    // TODO: Rename and change types and number of parameters
     public static MostRatedFragment newInstance() {
         MostRatedFragment fragment = new MostRatedFragment();
         Bundle args = new Bundle();

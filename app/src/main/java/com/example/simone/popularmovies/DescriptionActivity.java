@@ -8,6 +8,7 @@ import android.net.NetworkInfo;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -16,6 +17,8 @@ import com.example.simone.popularmovies.Utils.JsonUtils;
 import com.example.simone.popularmovies.async.AsyncTaskCompleteListener;
 import com.example.simone.popularmovies.async.RetrieveMoviesInformationsTask;
 import com.example.simone.popularmovies.model.Movie;
+import com.example.simone.popularmovies.model.Review;
+import com.example.simone.popularmovies.model.Trailer;
 import com.squareup.picasso.Picasso;
 
 
@@ -39,8 +42,8 @@ public class DescriptionActivity extends AppCompatActivity {
     @BindView(R.id.tv_description_movie_average_vote) TextView mTextViewMovieVote;
     @BindView(R.id.tv_description_movie_overview) TextView mTextViewOverview;
 
-    private ArrayList<Movie> mMovieTrailersList = new ArrayList<>();
-    private ArrayList<Movie> mMovieReviewsList = new ArrayList<>();
+    private ArrayList<Trailer> mMovieTrailersList = new ArrayList<>();
+    private ArrayList<Review> mMovieReviewsList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,7 +71,7 @@ public class DescriptionActivity extends AppCompatActivity {
             mTextViewMovieVote.setText(String.valueOf(movie.getVoteAverage()));
             mTextViewOverview.setText(movie.getOverview());
 
-            // Looking for Trailers and Reviews
+            // Looking for Trailers and Review
             startAsyncRetrievingMovieTrailersAndReviews(movie.getId(), null);
         }
     }
@@ -104,7 +107,7 @@ public class DescriptionActivity extends AppCompatActivity {
 //            mProgressBar.setVisibility(View.INVISIBLE);
             if (result != null && !result.isEmpty()) {
                 try {
-                    mMovieTrailersList = new JsonUtils().parseAnswerJson(result);
+                    mMovieTrailersList = new JsonUtils().parseAnswerTrailerJson(result);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -131,7 +134,7 @@ public class DescriptionActivity extends AppCompatActivity {
 //            mProgressBar.setVisibility(View.INVISIBLE);
             if (result != null && !result.isEmpty()) {
                 try {
-                    mMovieReviewsList = new JsonUtils().parseAnswerJson(result);
+                    mMovieReviewsList = new JsonUtils().parseAnswerReviewsJson(result);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

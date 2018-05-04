@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity{
     @BindView(R.id.tv_internet_message) TextView mInternetMessage;
 
     private static final String LIFECYCLE_LAST_MAIN_FRAGMENT_VIEWED = "last_main_fragment";
-    private int mLastMainFragmentId;
+    private int mLastMainFragmentId = 0;
 
     @BindView(R.id.bottom_navigation_view) BottomNavigationView bottomNavigationView;
 
@@ -67,6 +67,7 @@ public class MainActivity extends AppCompatActivity{
                 return true;
             }
         });
+
         if (mLastMainFragmentId != 0){
             Fragment selectedFragment = null;
             switch (mLastMainFragmentId){

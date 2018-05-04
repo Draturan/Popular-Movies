@@ -26,7 +26,7 @@ public class ApiNetworkUtils {
     private static final String PREFIX_POPULAR_URL = "https://api.themoviedb.org/3/movie/popular";
     private static final String PREFIX_TOP_RATED_URL = "https://api.themoviedb.org/3/movie/top_rated";
     private static final String PREFIX_TRAILER_URL = "https://api.themoviedb.org/3/movie/";
-    private static final String URL_TRAILER_PATH = "video";
+    private static final String URL_TRAILER_PATH = "videos";
     private static final String PREFIX_REVIEWS_URL = "https://api.themoviedb.org/3/movie/";
     private static final String URL_REVIEWS_PATH = "reviews";
 
@@ -102,25 +102,22 @@ public class ApiNetworkUtils {
     }
 
     public static URL buildTrailerUrl (int movieId, @Nullable String language){
+        // checking if there is any preference on language
+        String selectedLanguage = ApiNetworkUtils.language;;
+        if (language != null){
+            selectedLanguage = language;
+        }
         Uri uriBuilder = Uri.parse(PREFIX_TRAILER_URL).buildUpon()
                 .appendPath(Integer.toString(movieId))
                 .appendPath(URL_TRAILER_PATH)
                 .appendQueryParameter(PARAM_APIKEY, API_KEY)
+                .appendQueryParameter(PARAM_LANGUAGE,selectedLanguage)
                 .build();
-        // checking if there is any preference on language
-        if (language != null){
-            uriBuilder.buildUpon()
-                    .appendQueryParameter(PARAM_LANGUAGE, language)
-                    .build();
-        }else{
-            uriBuilder.buildUpon()
-                    .appendQueryParameter(PARAM_LANGUAGE, ApiNetworkUtils.language)
-                    .build();
-        }
+
 
         try{
             URL urlFromUri = new URL(uriBuilder.toString());
-            Log.v(TAG,"Trailer URL generated: " + urlFromUri);
+            Log.v(TAG,"TRAILERS URL generated: " + urlFromUri);
             return urlFromUri;
         }catch (MalformedURLException e){
             e.printStackTrace();
@@ -129,25 +126,21 @@ public class ApiNetworkUtils {
     }
 
     public static URL buildReviewsUrl (int movieId, @Nullable String language){
+        // checking if there is any preference on language
+        String selectedLanguage = ApiNetworkUtils.language;;
+        if (language != null){
+            selectedLanguage = language;
+        }
         Uri uriBuilder = Uri.parse(PREFIX_REVIEWS_URL).buildUpon()
                 .appendPath(Integer.toString(movieId))
                 .appendPath(URL_REVIEWS_PATH)
                 .appendQueryParameter(PARAM_APIKEY, API_KEY)
+                .appendQueryParameter(PARAM_LANGUAGE, selectedLanguage)
                 .build();
-        // checking if there is any preference on language
-        if (language != null){
-            uriBuilder.buildUpon()
-                    .appendQueryParameter(PARAM_LANGUAGE, language)
-                    .build();
-        }else{
-            uriBuilder.buildUpon()
-                    .appendQueryParameter(PARAM_LANGUAGE, ApiNetworkUtils.language)
-                    .build();
-        }
 
         try{
             URL urlFromUri = new URL(uriBuilder.toString());
-            Log.v(TAG,"Reviews URL generated: " + urlFromUri);
+            Log.v(TAG,"REVIEWS URL generated: " + urlFromUri);
             return urlFromUri;
         }catch (MalformedURLException e){
             e.printStackTrace();
