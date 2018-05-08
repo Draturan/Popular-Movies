@@ -42,9 +42,7 @@ public class Trailer implements Parcelable{
     };
 
     @Override
-    public int describeContents() {
-        return 0;
-    }
+    public int describeContents() { return 0; }
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
@@ -58,60 +56,28 @@ public class Trailer implements Parcelable{
         dest.writeString(iso_3166_1);
     }
 
-    public String getId(){
-        return this.id;
-    }
-    public void setId(String id){
-        this.id = id;
-    }
+    public String getId(){ return this.id; }
+    public void setId(String id){ this.id = id; }
 
-    public String getName(){
-        return this.name;
-    }
-    public void setName(String name){
-        this.name = name;
-    }
+    public String getName(){ return this.name; }
+    public void setName(String name){ this.name = name; }
 
-    public String getSite(){
-        return this.site;
-    }
-    public void setSite(String site){
-        this.site = site;
-    }
+    public String getSite(){ return this.site; }
+    public void setSite(String site){ this.site = site; }
 
-    public String getKey(){
-        return this.key;
-    }
-    public void setKey(String key){
-        this.key = key;
-    }
+    public String getKey(){ return this.key; }
+    public void setKey(String key){ this.key = key; }
 
-    public int getSize(){
-        return this.size;
-    }
-    public void setSize(int size){
-        this.size = size;
-    }
+    public int getSize(){ return this.size; }
+    public void setSize(int size){ this.size = size; }
 
-    public String getType(){
-        return this.type;
-    }
-    public void setType(String type){
-        this.type = type;
-    }
+    public String getType(){ return this.type; }
+    public void setType(String type){ this.type = type; }
 
-    public String getIso_639_1(){
-        return this.iso_639_1;
-    }
-    public void setIso_639_1(String iso_639_1){
-        this.iso_639_1 = iso_639_1;
-    }
+    public String getIso_639_1(){ return this.iso_639_1; }
+    public void setIso_639_1(String iso_639_1){ this.iso_639_1 = iso_639_1; }
 
-    public String getIso_3166_1(){
-        return this.iso_3166_1;
-    }
-    public void setIso_3166_1(String iso_3166_1){
-        this.iso_3166_1 = iso_3166_1;
-    }
+    public String getIso_3166_1(){ return this.iso_3166_1; }
+    public void setIso_3166_1(String iso_3166_1){ this.iso_3166_1 = iso_3166_1; }
 
 }

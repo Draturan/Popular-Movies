@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
@@ -11,11 +12,11 @@
         <ImageView
             android:id="@+id/im_movie_poster"
             android:layout_width="0dp"
-            android:layout_height="280dp"
+            android:layout_height="0dp"
             android:adjustViewBounds="true"
             android:contentDescription="@string/iv_poster_description"
             android:cropToPadding="false"
-            android:scaleType="fitXY"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintDimensionRatio="2:3"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -25,17 +26,16 @@
             android:id="@+id/tv_movie_poster"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
             android:background="@drawable/background_fade_text"
-            android:paddingBottom="5dp"
+            android:paddingBottom="30dp"
             android:paddingEnd="5dp"
             android:paddingStart="10dp"
-            android:paddingTop="20dp"
+            android:paddingTop="10dp"
             android:text="@string/tv_title_default"
             android:textColor="#ffffff"
             android:textSize="16sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/im_movie_poster" />
+            app:layout_constraintStart_toStartOf="@+id/im_movie_poster"
+            app:layout_constraintTop_toTopOf="@+id/im_movie_poster" />
     </android.support.constraint.ConstraintLayout>
 
-</GridLayout>
+</FrameLayout>

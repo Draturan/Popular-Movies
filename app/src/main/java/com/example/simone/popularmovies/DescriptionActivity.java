@@ -8,8 +8,11 @@ import android.net.NetworkInfo;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.view.View;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.simone.popularmovies.Utils.ApiNetworkUtils;
@@ -31,7 +34,8 @@ import butterknife.BindDrawable;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class DescriptionActivity extends AppCompatActivity {
+public class DescriptionActivity extends AppCompatActivity
+        implements TrailerAdapter.TrailerClickListener{
 
     @BindView(R.id.tv_description_movie_title) TextView mTextViewMovieTitle;
     @BindView(R.id.iv_poster_big) ImageView mImageViewPosterBig;
@@ -43,7 +47,15 @@ public class DescriptionActivity extends AppCompatActivity {
     @BindView(R.id.tv_description_movie_overview) TextView mTextViewOverview;
 
     private ArrayList<Trailer> mMovieTrailersList = new ArrayList<>();
+    private TrailerAdapter trailerAdapter;
+    @BindView(R.id.rv_movies_trailers) RecyclerView mTrailersList;
+    @BindView(R.id.pb_trailers_request) ProgressBar mProgressBarTrailers;
+    @BindView(R.id.tv_internet_trailers_message) TextView mTextViewTrailersConnectionError;
     private ArrayList<Review> mMovieReviewsList = new ArrayList<>();
+    private ReviewsAdapter reviewsAdapter;
+    @BindView(R.id.rv_movies_reviews) RecyclerView mReviewsList;
+    @BindView(R.id.pb_reviews_request) ProgressBar mProgressBarReviews;
+    @BindView(R.id.tv_internet_reviews_message) TextView mTextViewReviewsConnectionError;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,8 +83,21 @@ public class DescriptionActivity extends AppCompatActivity {
             mTextViewMovieVote.setText(String.valueOf(movie.getVoteAverage()));
             mTextViewOverview.setText(movie.getOverview());
 
+            // Setting up RecyclerViews for Trailers and Reviews
+            // Horizontal solution found on documentation: https://developer.android.com/reference/android/support/v7/widget/LinearLayoutManager
+            final LinearLayoutManager trailerlayoutmanager = new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false);
+            mTrailersList.setLayoutManager(trailerlayoutmanager);
+            final LinearLayoutManager reviewlayoutmanager = new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false);
+            mReviewsList.setLayoutManager(reviewlayoutmanager);
+
             // Looking for Trailers and Review
             startAsyncRetrievingMovieTrailersAndReviews(movie.getId(), null);
+
+            // Setting up Adapters for Trailers and Reviews
+            trailerAdapter = new TrailerAdapter(this, mMovieTrailersList, this);
+            reviewsAdapter = new ReviewsAdapter(this, mMovieReviewsList);
+            mTrailersList.setAdapter(trailerAdapter);
+            mReviewsList.setAdapter(reviewsAdapter);
         }
     }
 
@@ -86,8 +111,14 @@ public class DescriptionActivity extends AppCompatActivity {
             new RetrieveMoviesInformationsTask(getApplicationContext(), new FetchMovieTrailersTaskCompleteListener()).execute(buildTrailerUrl);
             new RetrieveMoviesInformationsTask(getApplicationContext(), new FetchMovieReviewsTaskCompleteListener()).execute(buildReviewsUrl);
         } else {
-            connectionMissing();
+            connectionMissing(mTextViewTrailersConnectionError);
+            connectionMissing(mTextViewReviewsConnectionError);
         }
+
+    }
+
+    @Override
+    public void onTrailerClick(Trailer trailerClicked) {
 
     }
 
@@ -98,22 +129,22 @@ public class DescriptionActivity extends AppCompatActivity {
 
         @Override
         public void onPreTaskExecute() {
-//            mProgressBar.setVisibility(View.VISIBLE);
-//            mInternetMessage.setVisibility(View.INVISIBLE);
+            mProgressBarTrailers.setVisibility(View.VISIBLE);
+            mTextViewTrailersConnectionError.setVisibility(View.GONE);
         }
 
         @Override
         public void onTaskComplete(String result) {
-//            mProgressBar.setVisibility(View.INVISIBLE);
+            mProgressBarTrailers.setVisibility(View.GONE);
             if (result != null && !result.isEmpty()) {
                 try {
                     mMovieTrailersList = new JsonUtils().parseAnswerTrailerJson(result);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-//                movieAdapter.updateData(mMovieTrailersList);
+                trailerAdapter.updateData(mMovieTrailersList);
             } else {
-                connectionMissing();
+                connectionMissing(mTextViewTrailersConnectionError);
             }
         }
     }
@@ -125,28 +156,28 @@ public class DescriptionActivity extends AppCompatActivity {
 
         @Override
         public void onPreTaskExecute() {
-//            mProgressBar.setVisibility(View.VISIBLE);
-//            mInternetMessage.setVisibility(View.INVISIBLE);
+            mProgressBarReviews.setVisibility(View.VISIBLE);
+            mTextViewReviewsConnectionError.setVisibility(View.GONE);
         }
 
         @Override
         public void onTaskComplete(String result) {
-//            mProgressBar.setVisibility(View.INVISIBLE);
+            mProgressBarReviews.setVisibility(View.GONE);
             if (result != null && !result.isEmpty()) {
                 try {
                     mMovieReviewsList = new JsonUtils().parseAnswerReviewsJson(result);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-//                movieAdapter.updateData(mMovieReviewsList);
+                reviewsAdapter.updateData(mMovieReviewsList);
             } else {
-                connectionMissing();
+                connectionMissing(mTextViewReviewsConnectionError);
             }
         }
     }
 
-    public void connectionMissing() {
-//            mInternetMessage.setText(R.string.internet_error_message);
-//            mInternetMessage.setVisibility(View.VISIBLE);
+    public void connectionMissing(TextView textView) {
+            textView.setText(R.string.internet_error_message);
+            textView.setVisibility(View.VISIBLE);
     }
 }

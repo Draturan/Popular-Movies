@@ -13,4 +13,11 @@
     <!-- TextColors -->
     <color name="backgroundTextView_grad_start">#00000000</color>
     <color name="backgroundTextView_grad_finish">#be000000</color>
+
+    <!-- Description Activity -->
+    <color name="description_value_vote">#257b16</color>
+    <color name="description_label_vote">#000000</color>
+    <color name="description_label">#1e1f73</color>
+    <color name="description_value_date">#3c3c74</color>
+    <color name="description_value_overview">#252525</color>
 </resources>

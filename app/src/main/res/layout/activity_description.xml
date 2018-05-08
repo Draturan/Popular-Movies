@@ -9,6 +9,7 @@
     <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/cl_description_body"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         tools:context="com.example.simone.popularmovies.DescriptionActivity">
@@ -47,8 +48,8 @@
             android:layout_marginTop="12dp"
             android:maxWidth="180dp"
             android:text="@string/description_default_text_Title"
-            android:textColor="#1e1f73"
-            android:textSize="20sp"
+            android:textColor="@color/description_label"
+            android:textSize="@dimen/label_description_text"
             app:layout_constraintStart_toEndOf="@+id/iv_poster_small"
             app:layout_constraintTop_toBottomOf="@+id/iv_poster_big" />
 
@@ -58,8 +59,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
             android:text="@string/description_default_text_Release_date"
-            android:textColor="#3c3c74"
-            android:textSize="18sp"
+            android:textColor="@color/description_value_date"
+            android:textSize="@dimen/value_description_date"
             app:layout_constraintStart_toStartOf="@+id/tv_description_movie_title"
             app:layout_constraintTop_toBottomOf="@+id/tv_description_movie_title" />
 
@@ -69,8 +70,8 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="36dp"
             android:text="@string/description_label_voteAverage"
-            android:textColor="#000000"
-            android:textSize="14sp"
+            android:textColor="@color/description_label_vote"
+            android:textSize="@dimen/label_description_vote"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/tv_description_movie_title" />
 
@@ -81,8 +82,8 @@
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
             android:text="@string/description_default_text_voteAverage"
-            android:textColor="#257b16"
-            android:textSize="30sp"
+            android:textColor="@color/description_value_vote"
+            android:textSize="@dimen/value_description_vote"
             app:layout_constraintEnd_toStartOf="@+id/tv_description_averageVote_label"
             app:layout_constraintStart_toEndOf="@+id/tv_description_averageVote_label"
             app:layout_constraintTop_toBottomOf="@+id/tv_description_averageVote_label" />
@@ -93,8 +94,8 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
             android:text="@string/description_label_overview"
-            android:textColor="#1e1f73"
-            android:textSize="20sp"
+            android:textColor="@color/description_label"
+            android:textSize="@dimen/label_description_text"
             app:layout_constraintBottom_toTopOf="@+id/tv_description_movie_overview"
             app:layout_constraintStart_toStartOf="@+id/tv_description_movie_overview"
             app:layout_constraintTop_toTopOf="@+id/tv_description_movie_overview" />
@@ -103,20 +104,128 @@
             android:id="@+id/tv_description_movie_overview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
-            android:paddingBottom="50dp"
+            android:layout_marginTop="28dp"
+            android:paddingTop="20dp"
             android:paddingLeft="12dp"
             android:paddingRight="12dp"
-            android:paddingTop="20dp"
+            android:paddingBottom="20dp"
             android:text="@string/description_default_text_Overview"
-            android:textColor="#252525"
-            android:textSize="14sp"
+            android:textColor="@color/description_value_overview"
+            android:textSize="@dimen/value_description_overview"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/iv_poster_small" />
 
+        <TextView
+            android:id="@+id/tv_ofRV_trailers_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/description_label_rv_trailers"
+            android:textColor="@color/description_label"
+            android:textSize="@dimen/label_description_text"
+            app:layout_constraintBottom_toTopOf="@+id/rv_movies_trailers"
+            app:layout_constraintStart_toStartOf="@+id/tv_description_overview_label"
+            app:layout_constraintTop_toTopOf="@+id/rv_movies_trailers" />
+
+        <TextView
+            android:id="@+id/tv_internet_trailers_message"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="36dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:background="@color/errorBackground"
+            android:padding="5dp"
+            android:text="@string/internet_error_message"
+            android:textAlignment="center"
+            android:textColor="@color/colorAccent"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="@id/rv_movies_trailers"
+            app:layout_constraintEnd_toEndOf="@id/rv_movies_trailers"
+            app:layout_constraintStart_toStartOf="@id/rv_movies_trailers" />
+
+        <ProgressBar
+            android:id="@+id/pb_trailers_request"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_marginBottom="8dp"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="@id/rv_movies_trailers"
+            app:layout_constraintEnd_toEndOf="@id/rv_movies_trailers"
+            app:layout_constraintStart_toStartOf="@id/rv_movies_trailers"
+            app:layout_constraintTop_toTopOf="@id/rv_movies_trailers" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_movies_trailers"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:clipToPadding="false"
+            android:minHeight="200dp"
+            android:paddingBottom="10dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:paddingTop="20dp"
+            app:layout_constraintBottom_toTopOf="@+id/rv_movies_reviews"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_description_movie_overview" />
+
+        <TextView
+            android:id="@+id/tv_ofRV_reviews_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/description_label_rv_reviews"
+            android:textColor="@color/description_label"
+            android:textSize="@dimen/label_description_text"
+            app:layout_constraintBottom_toTopOf="@+id/rv_movies_reviews"
+            app:layout_constraintStart_toStartOf="@+id/tv_description_overview_label"
+            app:layout_constraintTop_toTopOf="@+id/rv_movies_reviews" />
+
+        <TextView
+            android:id="@+id/tv_internet_reviews_message"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="36dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:background="@color/errorBackground"
+            android:padding="5dp"
+            android:text="@string/internet_error_message"
+            android:textAlignment="center"
+            android:textColor="@color/colorAccent"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="@id/rv_movies_reviews"
+            app:layout_constraintEnd_toEndOf="@id/rv_movies_reviews"
+            app:layout_constraintStart_toStartOf="@id/rv_movies_reviews" />
+
+        <ProgressBar
+            android:id="@+id/pb_reviews_request"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_marginBottom="8dp"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="@id/rv_movies_reviews"
+            app:layout_constraintEnd_toEndOf="@id/rv_movies_reviews"
+            app:layout_constraintStart_toStartOf="@id/rv_movies_reviews"
+            app:layout_constraintTop_toTopOf="@id/rv_movies_reviews" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_movies_reviews"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:clipToPadding="false"
+            android:minHeight="200dp"
+            android:paddingBottom="50dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:paddingTop="20dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/rv_movies_trailers" />
+
         <android.support.constraint.ConstraintLayout
+            android:id="@+id/cl_tmdb_reference"
             android:layout_width="0dp"
             android:layout_height="30dp"
             android:background="#3c3c74"

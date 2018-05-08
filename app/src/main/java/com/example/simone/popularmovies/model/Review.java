@@ -28,20 +28,14 @@ public class Review implements Parcelable{
 
     public static final Creator<Review> CREATOR = new Creator<Review>() {
         @Override
-        public Review createFromParcel(Parcel in) {
-            return new Review(in);
-        }
+        public Review createFromParcel(Parcel in) { return new Review(in); }
 
         @Override
-        public Review[] newArray(int size) {
-            return new Review[size];
-        }
+        public Review[] newArray(int size) { return new Review[size]; }
     };
 
     @Override
-    public int describeContents() {
-        return 0;
-    }
+    public int describeContents() { return 0; }
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
