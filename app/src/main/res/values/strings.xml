@@ -42,4 +42,11 @@
     <string name="tv_title_default">NOT DEFINED</string>
     <string name="iv_poster_description">Poster of the movie</string>
 
+    <!-- Layout - trailers_list -->
+    <string name="trailer_tv_title">...</string>
+    <string name="trailer_iv_description">Thumbnail of the trailer</string>
+    <!-- Layout - reviews_list -->
+    <string name="review_tv_author">Anonimo</string>
+    <string name="review_tv_review">I don\'t really know what to say... I\'m a little bit depressed</string>
+
 </resources>

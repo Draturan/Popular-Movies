@@ -20,4 +20,7 @@
     <color name="description_label">#1e1f73</color>
     <color name="description_value_date">#3c3c74</color>
     <color name="description_value_overview">#252525</color>
+    <color name="trailers_text_title">#e6e6e6</color>
+    <color name="reviews_text_author">#e6e6e6</color>
+    <color name="reviews_text_review">#c7c7c7</color>
 </resources>

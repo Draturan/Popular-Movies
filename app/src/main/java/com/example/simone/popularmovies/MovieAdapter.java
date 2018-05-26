@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -96,7 +97,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.PosterViewHo
                     .placeholder(dNoImage)
                     .error(dNoImageAvailable)
                     .into(mPoster);
-
+            Log.d("IMAGE TRAILER: ", ApiNetworkUtils.getImageUrl(mMoviesList.get(position).getPosterPath()).toString());
         }
 
         @Override

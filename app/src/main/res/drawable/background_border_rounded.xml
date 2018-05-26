@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- suggestion followed:
+    https://stackoverflow.com/questions/36208320/framelayout-with-rounded-corners-->
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <solid android:color="@color/colorPrimary" />
+
+    <stroke android:width="@dimen/container_stroke"
+        android:color="@color/white_trans" />
+    <padding android:bottom="@dimen/container_padding"
+        android:top="@dimen/container_padding"
+        android:left="@dimen/container_padding"
+        android:right="@dimen/container_padding" />
+    <corners android:bottomLeftRadius="@dimen/container_border_radius"
+        android:topLeftRadius="@dimen/container_border_radius"
+        android:bottomRightRadius="@dimen/container_border_radius"
+        android:topRightRadius="@dimen/container_border_radius" />
+</shape>

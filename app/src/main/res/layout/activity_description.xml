@@ -115,7 +115,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/iv_poster_small" />
+            app:layout_constraintTop_toBottomOf="@+id/iv_poster_small"
+            app:layout_constraintBottom_toTopOf="@id/tv_ofRV_trailers_label"/>
 
         <TextView
             android:id="@+id/tv_ofRV_trailers_label"
@@ -124,9 +125,9 @@
             android:text="@string/description_label_rv_trailers"
             android:textColor="@color/description_label"
             android:textSize="@dimen/label_description_text"
-            app:layout_constraintBottom_toTopOf="@+id/rv_movies_trailers"
             app:layout_constraintStart_toStartOf="@+id/tv_description_overview_label"
-            app:layout_constraintTop_toTopOf="@+id/rv_movies_trailers" />
+            app:layout_constraintTop_toBottomOf="@id/tv_description_movie_overview"
+            app:layout_constraintBottom_toTopOf="@id/rv_movies_trailers" />
 
         <TextView
             android:id="@+id/tv_internet_trailers_message"
@@ -161,26 +162,25 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:clipToPadding="false"
-            android:minHeight="200dp"
             android:paddingBottom="10dp"
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
-            android:paddingTop="20dp"
-            app:layout_constraintBottom_toTopOf="@+id/rv_movies_reviews"
+            android:paddingTop="10dp"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_description_movie_overview" />
+            app:layout_constraintTop_toBottomOf="@id/tv_ofRV_trailers_label" />
 
         <TextView
             android:id="@+id/tv_ofRV_reviews_label"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="28dp"
             android:text="@string/description_label_rv_reviews"
             android:textColor="@color/description_label"
             android:textSize="@dimen/label_description_text"
             app:layout_constraintBottom_toTopOf="@+id/rv_movies_reviews"
             app:layout_constraintStart_toStartOf="@+id/tv_description_overview_label"
-            app:layout_constraintTop_toTopOf="@+id/rv_movies_reviews" />
+            app:layout_constraintTop_toBottomOf="@+id/rv_movies_trailers" />
 
         <TextView
             android:id="@+id/tv_internet_reviews_message"
@@ -215,14 +215,13 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:clipToPadding="false"
-            android:minHeight="200dp"
             android:paddingBottom="50dp"
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
-            android:paddingTop="20dp"
+            android:paddingTop="10dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/rv_movies_trailers" />
+            app:layout_constraintTop_toBottomOf="@id/tv_ofRV_reviews_label" />
 
         <android.support.constraint.ConstraintLayout
             android:id="@+id/cl_tmdb_reference"

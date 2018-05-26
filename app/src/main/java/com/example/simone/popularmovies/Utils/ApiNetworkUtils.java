@@ -49,6 +49,8 @@ public class ApiNetworkUtils {
 
     // image domain to complete the images url
     private static final String IMAGE_DOMAIN = "https://image.tmdb.org/t/p/w185";
+    // seen on : https://stackoverflow.com/questions/8841159/how-to-make-youtube-video-thumbnails-in-android
+    private static final String YOUTUBE_IMAGE_DOMAIN = "http://img.youtube.com/vi";
 
     /**
      * Builder of the URL needed to ask TMDB server for movies informations
@@ -169,9 +171,15 @@ public class ApiNetworkUtils {
     }
 
     public static Uri getImageUrl(String path){
-
         return Uri.parse(IMAGE_DOMAIN).buildUpon()
                 .appendEncodedPath(path)
+                .build();
+    }
+
+    public static Uri getTrailerImageUrl(String key){
+        return Uri.parse(YOUTUBE_IMAGE_DOMAIN).buildUpon()
+                .appendEncodedPath(key)
+                .appendPath("0.jpg")
                 .build();
     }
 
