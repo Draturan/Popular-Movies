@@ -1,6 +1,11 @@
 package com.example.simone.popularmovies.fragments;
 
+import android.app.LoaderManager;
+import android.content.AsyncTaskLoader;
 import android.content.Intent;
+import android.content.Loader;
+import android.content.res.Configuration;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
@@ -27,8 +32,10 @@ import butterknife.ButterKnife;
  * create an instance of this fragment.
  */
 public class FavoritesFragment extends Fragment
-        implements MovieAdapter.ListMoviesClickListener{
+        implements MovieAdapter.ListMoviesClickListener,
+            LoaderManager.LoaderCallbacks<Cursor> {
 
+    private static final int TASK_LOADER_ID = 0;
     private ArrayList<Movie> mMoviesList = new ArrayList<>();
     private MovieAdapter movieAdapter;
     @BindView(R.id.rv_favorites_movies) RecyclerView moviesList;
@@ -60,6 +67,7 @@ public class FavoritesFragment extends Fragment
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
         }
+
     }
 
     @Override
@@ -69,8 +77,14 @@ public class FavoritesFragment extends Fragment
         View view = inflater.inflate(R.layout.fragment_favorites, container, false);
         ButterKnife.bind(this, view);
 
+        // optimizing number of movies in a row if orientation is in landscape
+        int spanCount = 2;
+        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE){
+            spanCount = 4;
+        }
+
         // setting Layout Manager for Recycler View
-        final GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), 2);
+        final GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), spanCount);
         moviesList.setLayoutManager(gridLayoutManager);
         moviesList.setHasFixedSize(true);
 
@@ -86,5 +100,31 @@ public class FavoritesFragment extends Fragment
         Intent startDescriptionActivityIntent = new Intent(getActivity(), DescriptionActivity.class);
         startDescriptionActivityIntent.putExtra("MovieObj", movieClicked);
         startActivity(startDescriptionActivityIntent);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+    }
+
+    @Override
+    public Loader<Cursor> onCreateLoader(int id, Bundle args) {
+        return new AsyncTaskLoader<Cursor>(getContext()) {
+            @Override
+            public Cursor loadInBackground() {
+                return null;
+            }
+        };
+    }
+
+    @Override
+    public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
+
+    }
+
+    @Override
+    public void onLoaderReset(Loader<Cursor> loader) {
+
     }
 }

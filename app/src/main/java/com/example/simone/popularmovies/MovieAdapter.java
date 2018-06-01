@@ -97,7 +97,6 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.PosterViewHo
                     .placeholder(dNoImage)
                     .error(dNoImageAvailable)
                     .into(mPoster);
-            Log.d("IMAGE TRAILER: ", ApiNetworkUtils.getImageUrl(mMoviesList.get(position).getPosterPath()).toString());
         }
 
         @Override

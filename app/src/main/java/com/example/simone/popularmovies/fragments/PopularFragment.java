@@ -2,6 +2,7 @@ package com.example.simone.popularmovies.fragments;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -81,8 +82,13 @@ public class PopularFragment extends Fragment
         View view = inflater.inflate(R.layout.fragment_popular, container, false);
         ButterKnife.bind(this,view);
 
+        // optimizing number of movies in a row if orientation is in landscape
+        int spanCount = 2;
+        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE){
+            spanCount = 4;
+        }
         // setting Layout Manager for Recycler View
-        final GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), 2);
+        final GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), spanCount);
         moviesList.setLayoutManager(gridLayoutManager);
         moviesList.setHasFixedSize(true);
 

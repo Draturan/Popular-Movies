@@ -23,4 +23,6 @@
     <color name="trailers_text_title">#e6e6e6</color>
     <color name="reviews_text_author">#e6e6e6</color>
     <color name="reviews_text_review">#c7c7c7</color>
+    <color name="favorite_selected">#d63939</color>
+    <color name="favorite_unselected">#ffffff</color>
 </resources>

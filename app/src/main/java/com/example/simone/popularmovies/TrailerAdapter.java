@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,7 @@ import android.widget.TextView;
 
 import com.example.simone.popularmovies.Utils.ApiNetworkUtils;
 import com.example.simone.popularmovies.model.Trailer;
+import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -65,6 +67,7 @@ public class TrailerAdapter extends RecyclerView.Adapter<TrailerAdapter.TrailerV
         implements View.OnClickListener{
         @BindView(R.id.iv_trailer_thumbnail) ImageView mTrailerThumbnail;
         @BindView(R.id.tv_trailer_title) TextView mTrailerTitle;
+        @BindView(R.id.iv_trailer_play) ImageView mTrailerPlay;
         @BindDrawable(R.drawable.ic_no_image) Drawable dNoImage;
         @BindDrawable(R.drawable.ic_no_image_available) Drawable dNoImageAvailable;
 
@@ -76,18 +79,29 @@ public class TrailerAdapter extends RecyclerView.Adapter<TrailerAdapter.TrailerV
 
         public void bind(int position, ArrayList<Trailer> trailerArrayList){
             mTrailerTitle.setText(trailerArrayList.get(position).getName());
-
             Picasso.with(mContext)
                     .load(ApiNetworkUtils.getTrailerImageUrl(trailerArrayList.get(position).getKey()))
                     .placeholder(dNoImage)
                     .error(dNoImageAvailable)
-                    .into(mTrailerThumbnail);
+                    .into(mTrailerThumbnail, new Callback() {
+                        //solution found on: https://github.com/codepath/android_guides/wiki/Displaying-Images-with-the-Picasso-Library
+                        @Override
+                        public void onSuccess() {
+                            mTrailerPlay.setVisibility(View.VISIBLE);
+                        }
 
+                        @Override
+                        public void onError() {
+
+                        }
+                    });
         }
 
         @Override
         public void onClick(View v) {
-
+            int clickedPosition = getAdapterPosition();
+            Trailer trailer = mTrailerList.get(clickedPosition);
+            mTrailerClickListener.onTrailerClick(trailer);
         }
     }
     /**

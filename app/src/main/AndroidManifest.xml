@@ -24,6 +24,11 @@
             android:parentActivityName=".MainActivity"
             android:label="@string/app_description">
         </activity>
+        <!-- Setting Content Provider -->
+        <provider
+            android:authorities="com.example.simone.popularmovies"
+            android:name=".data.PopularMoviesContentProvider"
+            android:exported="true"/>
     </application>
 
 </manifest>

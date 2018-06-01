@@ -1,24 +1,34 @@
 package com.example.simone.popularmovies;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.ColorStateList;
+import android.database.Cursor;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.Uri;
+import android.support.annotation.ColorRes;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.simone.popularmovies.Utils.ApiNetworkUtils;
 import com.example.simone.popularmovies.Utils.JsonUtils;
 import com.example.simone.popularmovies.async.AsyncTaskCompleteListener;
 import com.example.simone.popularmovies.async.RetrieveMoviesInformationsTask;
+import com.example.simone.popularmovies.data.FavoritesContract;
 import com.example.simone.popularmovies.model.Movie;
 import com.example.simone.popularmovies.model.Review;
 import com.example.simone.popularmovies.model.Trailer;
@@ -30,6 +40,7 @@ import org.json.JSONException;
 import java.net.URL;
 import java.util.ArrayList;
 
+import butterknife.BindColor;
 import butterknife.BindDrawable;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -39,6 +50,9 @@ public class DescriptionActivity extends AppCompatActivity
 
     @BindView(R.id.tv_description_movie_title) TextView mTextViewMovieTitle;
     @BindView(R.id.iv_poster_big) ImageView mImageViewPosterBig;
+    @BindView(R.id.floatingAB_add_favorite) FloatingActionButton mFloatingABFavorite;
+    @BindColor(R.color.favorite_selected) int cFABSelected;
+    @BindColor(R.color.favorite_unselected) int cFABUnselected;
     @BindView(R.id.iv_poster_small) ImageView mImageViewPosterSmall;
     @BindDrawable(R.drawable.ic_no_image) Drawable dNoImage;
     @BindDrawable(R.drawable.ic_no_image_available) Drawable dNoImageAvailable;
@@ -66,7 +80,7 @@ public class DescriptionActivity extends AppCompatActivity
         Intent intentThatStartThis = getIntent();
         if (intentThatStartThis.hasExtra("MovieObj")){
             // grabbing data from intent
-            Movie movie = intentThatStartThis.getParcelableExtra("MovieObj");
+            final Movie movie = intentThatStartThis.getParcelableExtra("MovieObj");
             // implementing data in the correct Views
             mTextViewMovieTitle.setText(movie.getTitle());
             Picasso.with(this)
@@ -83,6 +97,58 @@ public class DescriptionActivity extends AppCompatActivity
             mTextViewMovieVote.setText(String.valueOf(movie.getVoteAverage()));
             mTextViewOverview.setText(movie.getOverview());
 
+            Cursor cursor = getContentResolver().query(
+                    FavoritesContract.FavoritesEntry.CONTENT_URI,
+                    null,
+                    "movie_id=?",
+                    new String[]{Integer.toString(movie.getId())},
+                    null);
+
+            if (cursor.getCount() > 0){
+                mFloatingABFavorite.setImageTintList(ColorStateList.valueOf(cFABSelected));
+            }else{
+                mFloatingABFavorite.setImageTintList(ColorStateList.valueOf(cFABUnselected));
+            }
+            //Log.d("CURSOR: ", Integer.toString(cursor.getInt(2)));//cursor.getColumnIndex(FavoritesContract.FavoritesEntry.COLUMN_MOVIE_ID)
+            cursor.close();
+            // FloatingActionButton click listener
+            mFloatingABFavorite.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // Inserting or removing Movies from Favorites
+                    ContentValues contentValues = new ContentValues();
+
+
+                    contentValues.put(FavoritesContract.FavoritesEntry.COLUMN_TITLE, movie.getTitle());
+                    contentValues.put(FavoritesContract.FavoritesEntry.COLUMN_MOVIE_ID, movie.getId());
+                    contentValues.put(FavoritesContract.FavoritesEntry.COLUMN_POPULARITY, movie.getPopularity());
+                    contentValues.put(FavoritesContract.FavoritesEntry.COLUMN_POSTER_PATH, movie.getPosterPath());
+                    contentValues.put(FavoritesContract.FavoritesEntry.COLUMN_VOTE_AVARAGE, movie.getVoteAverage());
+                    contentValues.put(FavoritesContract.FavoritesEntry.COLUMN_ORIGINAL_LANG, movie.getOriginalLanguage());
+                    contentValues.put(FavoritesContract.FavoritesEntry.COLUMN_OVERVIEW, movie.getOverview());
+                    contentValues.put(FavoritesContract.FavoritesEntry.COLUMN_RELEASE_DATE, movie.getReleaseDate());
+
+                    if (mFloatingABFavorite.getImageTintList() == ColorStateList.valueOf(cFABUnselected)){
+                        mFloatingABFavorite.setImageTintList(ColorStateList.valueOf(cFABSelected));
+                        Uri uri = getContentResolver().insert(FavoritesContract.FavoritesEntry.CONTENT_URI, contentValues);
+                        if (uri != null){
+                            Toast.makeText(getBaseContext(),movie.getTitle() + " added to favorites!",Toast.LENGTH_LONG).show();
+                            Log.d(this.getClass() + "MOVIE INSERTED: ", uri.toString());
+                        }
+                    }else {
+                        mFloatingABFavorite.setImageTintList(ColorStateList.valueOf(cFABUnselected));
+                        int deleteOp = getContentResolver().delete(
+                                FavoritesContract.FavoritesEntry.CONTENT_URI,
+                                FavoritesContract.FavoritesEntry.COLUMN_MOVIE_ID + "=?",
+                                new String[]{Integer.toString(movie.getId())});
+                        if (deleteOp > 0){
+                            Toast.makeText(getBaseContext(),movie.getTitle() + " removed from favorites!",Toast.LENGTH_LONG).show();
+                        }
+                    }
+
+                }
+            });
+
             // Setting up RecyclerViews for Trailers and Reviews
             // Horizontal solution found on documentation: https://developer.android.com/reference/android/support/v7/widget/LinearLayoutManager
             final LinearLayoutManager trailerlayoutmanager = new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false);
@@ -98,6 +164,8 @@ public class DescriptionActivity extends AppCompatActivity
             reviewsAdapter = new ReviewsAdapter(this, mMovieReviewsList);
             mTrailersList.setAdapter(trailerAdapter);
             mReviewsList.setAdapter(reviewsAdapter);
+
+
         }
     }
 
@@ -119,7 +187,7 @@ public class DescriptionActivity extends AppCompatActivity
 
     @Override
     public void onTrailerClick(Trailer trailerClicked) {
-
+        startActivity(new Intent(Intent.ACTION_VIEW, ApiNetworkUtils.getTrailerVideoUrl(trailerClicked.getKey())));
     }
 
     /**

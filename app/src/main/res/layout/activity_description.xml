@@ -105,18 +105,18 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="28dp"
-            android:paddingTop="20dp"
+            android:paddingBottom="20dp"
             android:paddingLeft="12dp"
             android:paddingRight="12dp"
-            android:paddingBottom="20dp"
+            android:paddingTop="20dp"
             android:text="@string/description_default_text_Overview"
             android:textColor="@color/description_value_overview"
             android:textSize="@dimen/value_description_overview"
+            app:layout_constraintBottom_toTopOf="@id/tv_ofRV_trailers_label"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/iv_poster_small"
-            app:layout_constraintBottom_toTopOf="@id/tv_ofRV_trailers_label"/>
+            app:layout_constraintTop_toBottomOf="@+id/iv_poster_small" />
 
         <TextView
             android:id="@+id/tv_ofRV_trailers_label"
@@ -222,6 +222,20 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_ofRV_reviews_label" />
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/floatingAB_add_favorite"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="130dp"
+            android:layout_marginStart="80dp"
+            android:clickable="true"
+            android:tint="@color/favorite_unselected"
+            app:backgroundTint="@color/colorPrimary"
+            app:fabSize="mini"
+            app:layout_constraintBottom_toBottomOf="@+id/iv_poster_small"
+            app:layout_constraintStart_toStartOf="@+id/iv_poster_small"
+            app:srcCompat="@drawable/ic_favorite_black_18px" />
 
         <android.support.constraint.ConstraintLayout
             android:id="@+id/cl_tmdb_reference"

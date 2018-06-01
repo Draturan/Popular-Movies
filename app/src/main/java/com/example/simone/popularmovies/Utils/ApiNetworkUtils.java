@@ -52,6 +52,9 @@ public class ApiNetworkUtils {
     // seen on : https://stackoverflow.com/questions/8841159/how-to-make-youtube-video-thumbnails-in-android
     private static final String YOUTUBE_IMAGE_DOMAIN = "http://img.youtube.com/vi";
 
+    private static final String YOUTUBE_VIDEO_DOMAIN = "http://www.youtube.com/watch";
+    private static final String YOUTUBE_PARAM_VIDEO_KEY = "v";
+
     /**
      * Builder of the URL needed to ask TMDB server for movies informations
      *
@@ -95,7 +98,6 @@ public class ApiNetworkUtils {
 
         try{
             URL urlFromUri = new URL(uriBuilder.toString());
-            Log.v(TAG,"URL generated: " + urlFromUri);
             return urlFromUri;
         } catch (MalformedURLException e) {
             e.printStackTrace();
@@ -119,7 +121,6 @@ public class ApiNetworkUtils {
 
         try{
             URL urlFromUri = new URL(uriBuilder.toString());
-            Log.v(TAG,"TRAILERS URL generated: " + urlFromUri);
             return urlFromUri;
         }catch (MalformedURLException e){
             e.printStackTrace();
@@ -142,7 +143,6 @@ public class ApiNetworkUtils {
 
         try{
             URL urlFromUri = new URL(uriBuilder.toString());
-            Log.v(TAG,"REVIEWS URL generated: " + urlFromUri);
             return urlFromUri;
         }catch (MalformedURLException e){
             e.printStackTrace();
@@ -180,6 +180,12 @@ public class ApiNetworkUtils {
         return Uri.parse(YOUTUBE_IMAGE_DOMAIN).buildUpon()
                 .appendEncodedPath(key)
                 .appendPath("0.jpg")
+                .build();
+    }
+
+    public static Uri getTrailerVideoUrl(String key){
+        return Uri.parse(YOUTUBE_VIDEO_DOMAIN).buildUpon()
+                .appendQueryParameter(YOUTUBE_PARAM_VIDEO_KEY,key)
                 .build();
     }
 
