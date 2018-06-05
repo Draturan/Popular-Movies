@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_margin="@dimen/trailer_constraint_margin"
@@ -41,6 +40,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:visibility="gone"
+        android:contentDescription="@string/trailer_iv_description"
         app:layout_constraintBottom_toBottomOf="@+id/iv_trailer_thumbnail"
         app:layout_constraintEnd_toEndOf="@+id/iv_trailer_thumbnail"
         app:layout_constraintStart_toStartOf="@+id/iv_trailer_thumbnail"

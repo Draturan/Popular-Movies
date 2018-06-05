@@ -24,6 +24,7 @@ public class MainActivity extends AppCompatActivity{
     @BindView(R.id.tv_internet_message) TextView mInternetMessage;
 
     private static final String LIFECYCLE_LAST_MAIN_FRAGMENT_VIEWED = "last_main_fragment";
+    public static final String FRAGMENT_BACKSTACK = "ReturnToCorrectFragmentLessie";
     private int mLastMainFragmentId = 0;
 
     @BindView(R.id.bottom_navigation_view) BottomNavigationView bottomNavigationView;
@@ -62,8 +63,7 @@ public class MainActivity extends AppCompatActivity{
                         break;
                 }
                 FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-                transaction.replace(R.id.frame_layout, selectedFragment);
-                transaction.commit();
+                transaction.replace(R.id.frame_layout, selectedFragment).addToBackStack(FRAGMENT_BACKSTACK).commit();
                 return true;
             }
         });
@@ -82,13 +82,11 @@ public class MainActivity extends AppCompatActivity{
                     break;
             }
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-            transaction.replace(R.id.frame_layout, selectedFragment);
-            transaction.commit();
+            transaction.replace(R.id.frame_layout, selectedFragment).addToBackStack(FRAGMENT_BACKSTACK).commit();
         }else {
             // Start with the first fragment automatically
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-            transaction.replace(R.id.frame_layout, PopularFragment.newInstance());
-            transaction.commit();
+            transaction.replace(R.id.frame_layout, PopularFragment.newInstance()).addToBackStack(FRAGMENT_BACKSTACK).commit();
         }
 
 
@@ -98,6 +96,11 @@ public class MainActivity extends AppCompatActivity{
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putInt(LIFECYCLE_LAST_MAIN_FRAGMENT_VIEWED, mLastMainFragmentId);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
     }
 
     @Override

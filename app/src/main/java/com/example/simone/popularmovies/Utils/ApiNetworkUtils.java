@@ -2,7 +2,6 @@ package com.example.simone.popularmovies.Utils;
 
 import android.net.Uri;
 import android.support.annotation.Nullable;
-import android.util.Log;
 
 import com.example.simone.popularmovies.BuildConfig;
 
@@ -97,8 +96,7 @@ public class ApiNetworkUtils {
 
 
         try{
-            URL urlFromUri = new URL(uriBuilder.toString());
-            return urlFromUri;
+            return new URL(uriBuilder.toString());
         } catch (MalformedURLException e) {
             e.printStackTrace();
             return null;
@@ -107,7 +105,7 @@ public class ApiNetworkUtils {
 
     public static URL buildTrailerUrl (int movieId, @Nullable String language){
         // checking if there is any preference on language
-        String selectedLanguage = ApiNetworkUtils.language;;
+        String selectedLanguage = ApiNetworkUtils.language;
         if (language != null){
             selectedLanguage = language;
         }
@@ -120,8 +118,7 @@ public class ApiNetworkUtils {
 
 
         try{
-            URL urlFromUri = new URL(uriBuilder.toString());
-            return urlFromUri;
+            return new URL(uriBuilder.toString());
         }catch (MalformedURLException e){
             e.printStackTrace();
             return null;
@@ -130,7 +127,7 @@ public class ApiNetworkUtils {
 
     public static URL buildReviewsUrl (int movieId, @Nullable String language){
         // checking if there is any preference on language
-        String selectedLanguage = ApiNetworkUtils.language;;
+        String selectedLanguage = ApiNetworkUtils.language;
         if (language != null){
             selectedLanguage = language;
         }
@@ -142,8 +139,7 @@ public class ApiNetworkUtils {
                 .build();
 
         try{
-            URL urlFromUri = new URL(uriBuilder.toString());
-            return urlFromUri;
+            return new URL(uriBuilder.toString());
         }catch (MalformedURLException e){
             e.printStackTrace();
             return null;
