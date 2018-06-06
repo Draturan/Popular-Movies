@@ -105,6 +105,7 @@ public class PopularFragment extends Fragment
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
+        // to preserve position solution found here: https://stackoverflow.com/questions/27816217/how-to-save-recyclerviews-scroll-position-using-recyclerview-state
         outState.putParcelable(LAST_POSITION_RV, moviesList.getLayoutManager().onSaveInstanceState());
     }
 

@@ -39,6 +39,7 @@ public class MainActivity extends AppCompatActivity{
         // checking for savedInstantStates
         if (savedInstanceState != null){
             mLastMainFragmentId = savedInstanceState.getInt(LIFECYCLE_LAST_MAIN_FRAGMENT_VIEWED);
+            // solution found here https://github.com/codepath/android_guides/wiki/Handling-Configuration-Changes
             selectedFragment = getSupportFragmentManager().findFragmentByTag(SELECTED_FRAGMENT_TAG);
         }
         setContentView(R.layout.activity_main);
