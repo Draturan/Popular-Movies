@@ -1,10 +1,7 @@
 package com.example.simone.popularmovies.fragments;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.annotation.Nullable;
@@ -52,6 +49,7 @@ public class PopularFragment extends Fragment
     @BindView(R.id.tv_internet_message) TextView mInternetMessage;
 
     private String mSelectedSort = "popular";
+    private static final String LAST_POSITION_RV = "popularfragment.recycler.layout";
 
     public PopularFragment() {
         // Required empty public constructor
@@ -104,6 +102,19 @@ public class PopularFragment extends Fragment
         return view;
     }
 
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putParcelable(LAST_POSITION_RV, moviesList.getLayoutManager().onSaveInstanceState());
+    }
+
+    public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
+        super.onViewStateRestored(savedInstanceState);
+        if (savedInstanceState != null){
+            mSavedRecyclerLayoutState = savedInstanceState.getParcelable(LAST_POSITION_RV);
+            moviesList.getLayoutManager().onRestoreInstanceState(mSavedRecyclerLayoutState);
+        }
+    }
 
     /**
      * Function that starts the Async task to retrieve data from TMDB
@@ -152,6 +163,7 @@ public class PopularFragment extends Fragment
                     e.printStackTrace();
                 }
                 movieAdapter.updateData(mMoviesList);
+                moviesList.getLayoutManager().onRestoreInstanceState(mSavedRecyclerLayoutState);
             }else {
                 connectionMissing();
             }

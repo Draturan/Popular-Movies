@@ -74,16 +74,16 @@ public class MostRatedFragment extends Fragment
     }
 
     @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_most_rated, container, false);
         ButterKnife.bind(this, view);
-
-        // Checking savedInstanceState
-//        if (savedInstanceState != null){
-//            mSavedRecyclerLayoutState = savedInstanceState.getParcelable(LAST_POSITION_RV);
-//        }
 
         // optimizing number of movies in a row if orientation is in landscape
         int spanCount = 2;

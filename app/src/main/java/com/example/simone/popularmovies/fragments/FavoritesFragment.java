@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.os.Parcelable;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.Loader;
 import android.support.v7.widget.GridLayoutManager;
@@ -39,12 +41,14 @@ public class FavoritesFragment extends Fragment
     private ArrayList<Movie> mMoviesList = new ArrayList<>();
     private MovieAdapter movieAdapter;
     private Cursor mCursor;
+    private Parcelable mSavedRecyclerLayoutState;
     @BindView(R.id.rv_favorites_movies) RecyclerView moviesList;
 
     @BindView(R.id.pb_api_request_indicator) ProgressBar mProgressBar;
     @BindView(R.id.tv_internet_message) TextView mInternetMessage;
 
     private String mSelectedSort = "favorites";
+    private static final String LAST_POSITION_RV = "favoritesfragment.recycler.layout";
     private static final String CONST_MOVIE_ARRAY_LIST = "MovieList";
 
     public FavoritesFragment() {
@@ -102,7 +106,15 @@ public class FavoritesFragment extends Fragment
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-//        outState.putParcelableArrayList(CONST_MOVIE_ARRAY_LIST, mMoviesList);
+        outState.putParcelable(LAST_POSITION_RV, moviesList.getLayoutManager().onSaveInstanceState());
+    }
+
+    public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
+        super.onViewStateRestored(savedInstanceState);
+        if (savedInstanceState != null){
+            mSavedRecyclerLayoutState = savedInstanceState.getParcelable(LAST_POSITION_RV);
+            moviesList.getLayoutManager().onRestoreInstanceState(mSavedRecyclerLayoutState);
+        }
     }
 
     @Override
@@ -160,6 +172,7 @@ public class FavoritesFragment extends Fragment
                 mProgressBar.setVisibility(View.INVISIBLE);
                 parseCursorInMovieList(data);
                 movieAdapter.updateData(mMoviesList);
+                moviesList.getLayoutManager().onRestoreInstanceState(mSavedRecyclerLayoutState);
             }
 
         };
@@ -176,6 +189,7 @@ public class FavoritesFragment extends Fragment
                 parseCursorInMovieList(data);
                 movieAdapter.notifyDataSetChanged();
                 movieAdapter.updateData(mMoviesList);
+                moviesList.getLayoutManager().onRestoreInstanceState(mSavedRecyclerLayoutState);
             }
         }
     }

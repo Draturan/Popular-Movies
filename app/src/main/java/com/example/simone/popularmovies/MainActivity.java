@@ -28,6 +28,8 @@ public class MainActivity extends AppCompatActivity{
     private static final String LIFECYCLE_LAST_MAIN_FRAGMENT_VIEWED = "last_main_fragment";
     public static final String FRAGMENT_BACKSTACK = "ReturnToCorrectFragmentLessie";
     private int mLastMainFragmentId = 0;
+    private Fragment selectedFragment = null;
+    private static final String SELECTED_FRAGMENT_TAG = "myfragmentTag";
 
     @BindView(R.id.bottom_navigation_view) BottomNavigationView bottomNavigationView;
 
@@ -37,6 +39,7 @@ public class MainActivity extends AppCompatActivity{
         // checking for savedInstantStates
         if (savedInstanceState != null){
             mLastMainFragmentId = savedInstanceState.getInt(LIFECYCLE_LAST_MAIN_FRAGMENT_VIEWED);
+            selectedFragment = getSupportFragmentManager().findFragmentByTag(SELECTED_FRAGMENT_TAG);
         }
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
@@ -52,7 +55,6 @@ public class MainActivity extends AppCompatActivity{
                 new BottomNavigationView.OnNavigationItemSelectedListener() {
                     @Override
                     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                        Fragment selectedFragment = null;
                         mLastMainFragmentId = item.getItemId();
                         switch (mLastMainFragmentId){
                             case R.id.action_popular:
@@ -66,32 +68,34 @@ public class MainActivity extends AppCompatActivity{
                                 break;
                         }
                         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-                        transaction.replace(R.id.frame_layout, selectedFragment).addToBackStack(FRAGMENT_BACKSTACK).commit();
+                        transaction.replace(R.id.frame_layout, selectedFragment, SELECTED_FRAGMENT_TAG).addToBackStack(FRAGMENT_BACKSTACK).commit();
                         return true;
                     }
         });
 
         if (mLastMainFragmentId != 0){
-            Fragment selectedFragment = null;
-            switch (mLastMainFragmentId){
-                case R.id.action_popular:
-                    selectedFragment = PopularFragment.newInstance();
-                    break;
-                case R.id.action_most_rated:
-                    selectedFragment = MostRatedFragment.newInstance();
-                    break;
-                case R.id.action_favorites:
-                    selectedFragment = FavoritesFragment.newInstance();
-                    break;
+            if (selectedFragment == null){
+                switch (mLastMainFragmentId) {
+                    case R.id.action_popular:
+                        selectedFragment = PopularFragment.newInstance();
+                        break;
+                    case R.id.action_most_rated:
+                            selectedFragment = MostRatedFragment.newInstance();
+                        break;
+                    case R.id.action_favorites:
+                            selectedFragment = FavoritesFragment.newInstance();
+                        break;
+                }
             }
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-            transaction.replace(R.id.frame_layout, selectedFragment).addToBackStack(FRAGMENT_BACKSTACK).commit();
+            transaction.replace(R.id.frame_layout, selectedFragment,SELECTED_FRAGMENT_TAG).addToBackStack(FRAGMENT_BACKSTACK).commit();
         }else {
             // Start with the first fragment automatically
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-            transaction.replace(R.id.frame_layout, PopularFragment.newInstance()).addToBackStack(FRAGMENT_BACKSTACK).commit();
+            //checking if the selectedFragment is not already created
+            selectedFragment = selectedFragment == null ? PopularFragment.newInstance() : selectedFragment;
+            transaction.replace(R.id.frame_layout, selectedFragment, SELECTED_FRAGMENT_TAG).addToBackStack(FRAGMENT_BACKSTACK).commit();
         }
-
 
     }
 
