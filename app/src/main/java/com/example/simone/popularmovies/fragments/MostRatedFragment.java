@@ -1,12 +1,9 @@
 package com.example.simone.popularmovies.fragments;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
-import android.net.Uri;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
@@ -43,12 +40,14 @@ public class MostRatedFragment extends Fragment
 
     private ArrayList<Movie> mMoviesList = new ArrayList<>();
     private MovieAdapter movieAdapter;
+    private Parcelable mSavedRecyclerLayoutState;
     @BindView(R.id.rv_most_rated_movies) RecyclerView moviesList;
 
     @BindView(R.id.pb_api_request_indicator) ProgressBar mProgressBar;
     @BindView(R.id.tv_internet_message) TextView mInternetMessage;
 
     private String mSelectedSort = "top rated";
+    private static final String LAST_POSITION_RV = "mostratedfragment.recycler.layout";
 
     public MostRatedFragment() {
         // Required empty public constructor
@@ -81,6 +80,11 @@ public class MostRatedFragment extends Fragment
         View view = inflater.inflate(R.layout.fragment_most_rated, container, false);
         ButterKnife.bind(this, view);
 
+        // Checking savedInstanceState
+//        if (savedInstanceState != null){
+//            mSavedRecyclerLayoutState = savedInstanceState.getParcelable(LAST_POSITION_RV);
+//        }
+
         // optimizing number of movies in a row if orientation is in landscape
         int spanCount = 2;
         if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE){
@@ -102,6 +106,20 @@ public class MostRatedFragment extends Fragment
         return view;
     }
 
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putParcelable(LAST_POSITION_RV, moviesList.getLayoutManager().onSaveInstanceState());
+    }
+
+    @Override
+    public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
+        super.onViewStateRestored(savedInstanceState);
+        if (savedInstanceState != null){
+            mSavedRecyclerLayoutState = savedInstanceState.getParcelable(LAST_POSITION_RV);
+            moviesList.getLayoutManager().onRestoreInstanceState(mSavedRecyclerLayoutState);
+        }
+    }
 
     /**
      * Function that starts the Async task to retrieve data from TMDB
@@ -113,9 +131,7 @@ public class MostRatedFragment extends Fragment
     @SuppressWarnings("JavaDoc")
     private void startAsyncRetrievingMoviesInfo(String lookingFor, @Nullable String sortBy) {
         // checking internet connection
-        ConnectivityManager connectivityManager = (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo activeNetwork = connectivityManager.getActiveNetworkInfo();
-        if (activeNetwork != null && activeNetwork.isConnectedOrConnecting()) {
+        if (ApiNetworkUtils.isNetworkAvailable(getContext())) {
             URL buildUrl = ApiNetworkUtils.buildUrl(lookingFor, sortBy);
             new RetrieveMoviesInformationsTask(getActivity(), new FetchMovieTaskCompleteListener()).execute(buildUrl);
         } else {
@@ -152,10 +168,12 @@ public class MostRatedFragment extends Fragment
                     e.printStackTrace();
                 }
                 movieAdapter.updateData(mMoviesList);
+                moviesList.getLayoutManager().onRestoreInstanceState(mSavedRecyclerLayoutState);
             } else {
                 connectionMissing();
             }
         }
+
     }
 
     public void connectionMissing() {

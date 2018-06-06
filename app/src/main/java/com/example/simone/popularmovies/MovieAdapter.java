@@ -4,7 +4,6 @@ import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -66,10 +65,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.PosterViewHo
 
     @Override
     public int getItemCount() {
-        if (mMoviesList == null){
-            return 0;
-        }
-        return mMoviesList.size();
+        return  (mMoviesList == null) ? 0 : mMoviesList.size();
     }
 
     public class PosterViewHolder extends RecyclerView.ViewHolder

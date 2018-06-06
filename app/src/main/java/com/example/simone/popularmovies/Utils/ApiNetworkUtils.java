@@ -1,5 +1,8 @@
 package com.example.simone.popularmovies.Utils;
 
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.support.annotation.Nullable;
 
@@ -183,6 +186,12 @@ public class ApiNetworkUtils {
         return Uri.parse(YOUTUBE_VIDEO_DOMAIN).buildUpon()
                 .appendQueryParameter(YOUTUBE_PARAM_VIDEO_KEY,key)
                 .build();
+    }
+
+    public static boolean isNetworkAvailable(Context context){
+        ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetwork = connectivityManager.getActiveNetworkInfo();
+        return activeNetwork != null && activeNetwork.isConnectedOrConnecting();
     }
 
 }

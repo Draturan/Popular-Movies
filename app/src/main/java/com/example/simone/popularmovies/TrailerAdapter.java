@@ -4,7 +4,6 @@ import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -57,10 +56,7 @@ public class TrailerAdapter extends RecyclerView.Adapter<TrailerAdapter.TrailerV
 
     @Override
     public int getItemCount() {
-        if (mTrailerList.isEmpty()){
-            return 0;
-        }
-        return mTrailerList.size();
+        return  (mTrailerList.isEmpty()) ? 0 : mTrailerList.size();
     }
 
     public class TrailerViewHolder extends RecyclerView.ViewHolder

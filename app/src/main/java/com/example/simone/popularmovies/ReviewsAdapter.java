@@ -44,10 +44,7 @@ public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ReviewVi
 
     @Override
     public int getItemCount() {
-        if (mReviewList == null){
-            return 0;
-        }
-        return mReviewList.size();
+        return mReviewList == null ? 0 : mReviewList.size();
     }
 
     public class ReviewViewHolder extends RecyclerView.ViewHolder{

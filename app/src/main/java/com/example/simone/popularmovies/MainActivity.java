@@ -3,9 +3,11 @@ package com.example.simone.popularmovies;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ProgressBar;
@@ -41,31 +43,32 @@ public class MainActivity extends AppCompatActivity{
 
         /*
             Bottom Navigator View
-            The guide to implement the Bottom Navitagor View, with usage of Fragments, was given by
+            The guide to implement the Bottom Navigator View, with usage of Fragments, was given by
             my reviewer as a suggestion to improve the usability of the app, followed at this link:
             http://www.truiton.com/2017/01/android-bottom-navigation-bar-example/
          */
         // setting up Bottom Navigator View
-        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                Fragment selectedFragment = null;
-                mLastMainFragmentId = item.getItemId();
-                switch (mLastMainFragmentId){
-                    case R.id.action_popular:
-                        selectedFragment = PopularFragment.newInstance();
-                        break;
-                    case R.id.action_most_rated:
-                        selectedFragment = MostRatedFragment.newInstance();
-                        break;
-                    case R.id.action_favorites:
-                        selectedFragment = FavoritesFragment.newInstance();
-                        break;
-                }
-                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-                transaction.replace(R.id.frame_layout, selectedFragment).addToBackStack(FRAGMENT_BACKSTACK).commit();
-                return true;
-            }
+        bottomNavigationView.setOnNavigationItemSelectedListener(
+                new BottomNavigationView.OnNavigationItemSelectedListener() {
+                    @Override
+                    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                        Fragment selectedFragment = null;
+                        mLastMainFragmentId = item.getItemId();
+                        switch (mLastMainFragmentId){
+                            case R.id.action_popular:
+                                selectedFragment = PopularFragment.newInstance();
+                                break;
+                            case R.id.action_most_rated:
+                                selectedFragment = MostRatedFragment.newInstance();
+                                break;
+                            case R.id.action_favorites:
+                                selectedFragment = FavoritesFragment.newInstance();
+                                break;
+                        }
+                        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                        transaction.replace(R.id.frame_layout, selectedFragment).addToBackStack(FRAGMENT_BACKSTACK).commit();
+                        return true;
+                    }
         });
 
         if (mLastMainFragmentId != 0){

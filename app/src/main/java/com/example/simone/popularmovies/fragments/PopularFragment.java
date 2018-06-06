@@ -6,6 +6,7 @@ import android.content.res.Configuration;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
@@ -44,6 +45,7 @@ public class PopularFragment extends Fragment
 
     private ArrayList<Movie> mMoviesList = new ArrayList<>();
     private MovieAdapter movieAdapter;
+    private Parcelable mSavedRecyclerLayoutState;
     @BindView(R.id.rv_popular_movies) RecyclerView moviesList;
 
     @BindView(R.id.pb_api_request_indicator) ProgressBar mProgressBar;
@@ -113,9 +115,7 @@ public class PopularFragment extends Fragment
     @SuppressWarnings("JavaDoc")
     private void startAsyncRetrievingMoviesInfo(String lookingFor, @Nullable String sortBy){
         // checking internet connection
-        ConnectivityManager connectivityManager = (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo activeNetwork = connectivityManager.getActiveNetworkInfo();
-        if (activeNetwork != null && activeNetwork.isConnectedOrConnecting()){
+        if (ApiNetworkUtils.isNetworkAvailable(getContext())){
             URL buildUrl = ApiNetworkUtils.buildUrl(lookingFor,sortBy);
             new RetrieveMoviesInformationsTask(getActivity(),new FetchMovieTaskCompleteListener()).execute(buildUrl);
         }else{

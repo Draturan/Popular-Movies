@@ -3,7 +3,6 @@ package com.example.simone.popularmovies.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import java.net.URL;
 
 /**
  * Created by Simone on 04/05/2018 for Popular-Movies project

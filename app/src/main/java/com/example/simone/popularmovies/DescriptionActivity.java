@@ -1,16 +1,11 @@
 package com.example.simone.popularmovies;
 
 import android.content.ContentValues;
-import android.content.Context;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.database.Cursor;
-import android.graphics.Color;
 import android.graphics.drawable.Drawable;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.net.Uri;
-import android.support.annotation.ColorRes;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
@@ -171,9 +166,7 @@ public class DescriptionActivity extends AppCompatActivity
 
     private void startAsyncRetrievingMovieTrailersAndReviews(int movieId, @Nullable String language){
         // checking internet connection
-        ConnectivityManager connectivityManager = (ConnectivityManager) getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo activeNetwork = connectivityManager.getActiveNetworkInfo();
-        if (activeNetwork != null && activeNetwork.isConnectedOrConnecting()) {
+        if (ApiNetworkUtils.isNetworkAvailable(getApplicationContext())) {
             URL buildTrailerUrl = ApiNetworkUtils.buildTrailerUrl(movieId, language);
             URL buildReviewsUrl = ApiNetworkUtils.buildReviewsUrl(movieId, language);
             new RetrieveMoviesInformationsTask(getApplicationContext(), new FetchMovieTrailersTaskCompleteListener()).execute(buildTrailerUrl);
