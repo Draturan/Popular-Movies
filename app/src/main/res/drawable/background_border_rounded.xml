@@ -3,7 +3,6 @@
     https://stackoverflow.com/questions/36208320/framelayout-with-rounded-corners-->
 <shape xmlns:android="http://schemas.android.com/apk/res/android">
     <solid android:color="@color/colorPrimary" />
-
     <stroke android:width="@dimen/container_stroke"
         android:color="@color/white_trans" />
     <padding android:bottom="@dimen/container_padding"
