@@ -30,7 +30,7 @@ The App displays a scrolling grid of movie trailers, launches a details screen w
 
 1. Clone
 ```
-git clone https://github.com/fjoglar/popular-movies-app.git
+git clone https://github.com/Draturan/Popular-Movies.git
 ```
   or download this repository in your local machine.
 
