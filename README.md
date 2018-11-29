@@ -66,3 +66,4 @@ APY_KEY_TMDB = "your_tmdb_api_key"
 GNU General Public License v3.0
 
 ```
+> ###### **WARNING:** Please note that this project was submitted by Simone Armadoro as part of the Udacity's Android Developer Nanodegree.<br/><br/> As part of Udacity Honor code, your submissions must be your own work, hence submitting this project as yours will cause you to break the Udacity Honor Code and the suspension of your account. I allow you to check the code as a reference, but if you submit it, it's your own responsibility if you get expelled.<br/><br/> Besides this notice, the above license applies and this license notice must be included in all works derived from this project.
